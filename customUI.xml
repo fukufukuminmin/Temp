@@ -1,0 +1,29 @@
+﻿<customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui" onLoad="ribbonLoaded">
+  <ribbon startFromScratch="false">
+    <tabs>
+      <tab id="MyTab1" label="積算ソフト" insertBeforeQ="TabHome">
+        <group id="MyGroup1" label="ヘルプ">
+          <button id="MyHelpNormal" size="large" label="ヘルプ&#xD;&#xA;(通常)" imageMso="Help" onAction="MyHelpNormal_OnClick" />
+          <button id="MyHelpOnTop" size="large" label="ヘルプ&#xD;&#xA;(最前面)" imageMso="Help" onAction="MyHelpOnTop_OnClick" />
+          <separator id="MySep1.1"/>
+          <button id="MyVersion" size="large" label="バー&#xD;&#xA;ジョン" imageMso="Info" onAction="MyVersion_OnClick" />
+        </group>
+        <group id="MyGroup2" label="データベース">
+          <button id="MyDatabase" size="large" label="データ&#xD;&#xA;ベース" imageMso="DatabaseAccessBackEnd" onAction="MyDatabase_OnClick" />
+        </group>
+        <group id="MyGroup3" label="配管工事">
+          <button id="MyCalc" size="large" label="計算&#xD;&#xA;" imageMso="CalculateNow" onAction="MyCalc_OnClick" />
+          <separator id="MySep3.1"/>
+          <button id="MyCheck" size="large" label="チェック&#xD;&#xA;" imageMso="ErrorChecking" onAction="MyCheck_OnClick" />
+          <button id="MyCheckClear" size="large" label="チェック&#xD;&#xA;解除" imageMso="EraserMenu" onAction="MyCheckClear_OnClick" />
+        </group>
+        <group id="MyGroup4" label="断熱工事">
+          <button id="MyButton4.1" size="large" label="ダミー&#xD;&#xA;"/>
+        </group>
+        <group id="MyGroup5" label="足場工事">
+          <button id="MyButton5.1" size="large" label="ダミー&#xD;&#xA;"/>
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
