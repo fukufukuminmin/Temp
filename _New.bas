@@ -40,7 +40,7 @@ On Error GoTo LB_ERR
   End If
   dicTemp(Size) = dicTemp(Size) + Count
   Set dicTemp = Nothing
-  AddValve1 = False
+  AddValve1 = True
   Exit Function
 LB_ERR:
   AddValve1 = False
@@ -53,14 +53,43 @@ On Error GoTo LB_ERR
     KValve(Size) = 0
   End If
   KValve(Size) = KValve(Size) + Count
-  AddValve2 = False
+  AddValve2 = True
   Exit Function
 LB_ERR:
   AddValve2 = False
   Debug.Print ThisWorkbook.Name & "!" & "AddValve2"
 End Function
 
-Sub CalcValve()
+Function SortValve1(KValve As Dictionary) As Boolean
+On Error GoTo LB_ERR
+  Dim i As Integer
+  Dim j As Integer
+  Dim Matl As String
+  Dim arr As Variant
+  Dim dicNew As Dictionary
+  arr = KValve.Keys()
+  For i = 0 To UBound(arr)
+    For j = UBound(arr) To i Step -1
+      If arr(i) > arr(j) Then
+        Matl = arr(i)
+        arr(i) = arr(j)
+        arr(j) = Matl
+      End If
+    Next j
+  Next i
+  Set dicNew = New Dictionary
+  For i = 0 To UBound(arr)
+    
+  
+  Next i
+  SortValve1 = True
+  Exit Function
+LB_ERR:
+  SortValve1 = False
+  Debug.Print ThisWorkbook.Name & "!" & "SortValve1"
+End Function
+
+Sub CalcValves()
   Dim i As Integer
   Dim ret As Boolean
   Set valves.Gat = ResetValve(valves.Gat)
