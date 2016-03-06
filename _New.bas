@@ -77,17 +77,21 @@ Sub CalcValve()
   ret = True
   For i = 1 To numEData
     With edata(i)
-      ret = ret And AddValve1(valves.Gat, .Ş¿_•Ùˆê”Ê, .”zŠÇŒa_A, .”—Ê_•ÙƒQ[ƒg)
-      ret = ret And AddValve1(valves.Glb, .Ş¿_•Ùˆê”Ê, .”zŠÇŒa_A, .”—Ê_•ÙƒOƒ[ƒu)
-      ret = ret And AddValve1(valves.Bal, .Ş¿_•Ùˆê”Ê, .”zŠÇŒa_A, .”—Ê_•Ùƒ{[ƒ‹)
-      'ret = ret And AddValve1(valves.Bat, .Ş¿_•Ùƒoƒ^ƒtƒ‰ƒC, .”zŠÇŒa_A, .”—Ê_•Ùƒoƒ^ƒtƒ‰ƒC)
-      'ret = ret And AddValve1(valves.Plg, .Ş¿_•Ùƒvƒ‰ƒO, .”zŠÇŒa_A, .”—Ê_•Ùƒvƒ‰ƒO)
-      ret = ret And AddValve1(valves.Dia, .Ş¿_•Ùƒ_ƒCƒ„ƒtƒ‰ƒ€, .”zŠÇŒa_A, .”—Ê_•Ùƒ_ƒCƒ„ƒtƒ‰ƒ€)
-      ret = ret And AddValve1(valves.Chk, .Ş¿_•Ùˆê”Ê, .”zŠÇŒa_A, .”—Ê_•Ù‹t~)
-      ret = ret And AddValve2(valves.Oth, .”zŠÇŒa_A, .”—Ê_‚»‚Ì‘¼)
-      ret = ret And AddValve2(valves.IVa, .”zŠÇŒa_A, .”—Ê_•ÙŒv‘•)
-      ret = ret And AddValve2(valves.Flo, .”zŠÇŒa_A, .”—Ê_—¬—ÊŒv)
-      ret = ret And AddValve2(valves.Ins, .”zŠÇŒa_A, .”—Ê_ŒvŠí)
+      ret = ret And AddValve1(valves.Gat, .æè³ª_å¼ä¸€èˆ¬, .é…ç®¡å¾„_A, .æ•°é‡_å¼ã‚²ãƒ¼ãƒˆ)
+      ret = ret And AddValve1(valves.Glb, .æè³ª_å¼ä¸€èˆ¬, .é…ç®¡å¾„_A, .æ•°é‡_å¼ã‚°ãƒ­ãƒ¼ãƒ–)
+      ret = ret And AddValve1(valves.Bal, .æè³ª_å¼ä¸€èˆ¬, .é…ç®¡å¾„_A, .æ•°é‡_å¼ãƒœãƒ¼ãƒ«)
+      'ret = ret And AddValve1(valves.Bat, .æè³ª_å¼ãƒã‚¿ãƒ•ãƒ©ã‚¤, .é…ç®¡å¾„_A, .æ•°é‡_å¼ãƒã‚¿ãƒ•ãƒ©ã‚¤)
+      'ret = ret And AddValve1(valves.Plg, .æè³ª_å¼ãƒ—ãƒ©ã‚°, .é…ç®¡å¾„_A, .æ•°é‡_å¼ãƒ—ãƒ©ã‚°)
+      ret = ret And AddValve1(valves.Dia, .æè³ª_å¼ãƒ€ã‚¤ãƒ¤ãƒ•ãƒ©ãƒ , .é…ç®¡å¾„_A, .æ•°é‡_å¼ãƒ€ã‚¤ãƒ¤ãƒ•ãƒ©ãƒ )
+      ret = ret And AddValve1(valves.Chk, .æè³ª_å¼ä¸€èˆ¬, .é…ç®¡å¾„_A, .æ•°é‡_å¼é€†æ­¢)
+      ret = ret And AddValve2(valves.Oth, .é…ç®¡å¾„_A, .æ•°é‡_ãã®ä»–)
+      ret = ret And AddValve2(valves.IVa, .é…ç®¡å¾„_A, .æ•°é‡_å¼è¨ˆè£…)
+      ret = ret And AddValve2(valves.Flo, .é…ç®¡å¾„_A, .æ•°é‡_æµé‡è¨ˆ)
+      ret = ret And AddValve2(valves.Ins, .é…ç®¡å¾„_A, .æ•°é‡_è¨ˆå™¨)
     End With
   Next i
 End Sub
+
+
+ç¨®é¡	æè³ª	ï½»ï½²ï½½ï¾	æ•°é‡	å˜ä¾¡	å°è¨ˆ
+		A	pc	k\/pc	k\
