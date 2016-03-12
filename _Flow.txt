@@ -1,0 +1,21 @@
+CheckData()
+  InitInputDataCell
+  IsDataFileActive()
+*  ResetInputData()
+*  CheckInputType()
+*  ReadInputData()
+*  CheckInputData()
+*  CalcEachQuantity()
+*  ReadAndCheckDbData()
+*  CalcEachCost()
+*  CalcTotalCost()
+  SetMessageOnInputSheet
+
+Å°GLOBALS
+Global rngInput As Range
+Global datacell As InputDataCell
+Global data() As InputData
+Global numData As Integer
+Global params As ParamType
+Global wbDataFile As Workbook
+

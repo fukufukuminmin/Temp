@@ -7,15 +7,18 @@
           <button id="MyHelpOnTop" size="large" label="ヘルプ&#xD;&#xA;(最前面)" imageMso="Help" onAction="MyHelpOnTop_OnClick" />
           <separator id="MySep1.1"/>
           <button id="MyVersion" size="large" label="バー&#xD;&#xA;ジョン" imageMso="Info" onAction="MyVersion_OnClick" />
+          <button id="MyInformation" size="large" label="積算情報&#xD;&#xA;" imageMso="Info" onAction="MyInformation_OnClick" />
         </group>
         <group id="MyGroup2" label="データベース">
           <button id="MyDatabase" size="large" label="データ&#xD;&#xA;ベース" imageMso="DatabaseAccessBackEnd" onAction="MyDatabase_OnClick" />
         </group>
         <group id="MyGroup3" label="配管工事">
-          <button id="MyCalc" size="large" label="計算&#xD;&#xA;" imageMso="CalculateNow" onAction="MyCalc_OnClick" />
-          <separator id="MySep3.1"/>
-          <button id="MyCheck" size="large" label="チェック&#xD;&#xA;" imageMso="ErrorChecking" onAction="MyCheck_OnClick" />
           <button id="MyCheckClear" size="large" label="チェック&#xD;&#xA;解除" imageMso="EraserMenu" onAction="MyCheckClear_OnClick" />
+          <button id="MyCheckData" size="large" label="チェック&#xD;&#xA;実行" imageMso="ErrorChecking" onAction="MyCheckData_OnClick" />
+          <separator id="MySep3.1"/>
+          <!--<button id="MyOutput" size="large" label="出力&#xD;&#xA;" imageMso="CalculateNow" onAction="MyOutput_OnClick" />-->
+          <button id="MyOutput" size="large" label="出力&#xD;&#xA;" imageMso="ExportExcel" onAction="MyOutput_OnClick" />
+          <button id="MyOutputConfig" size="large" label="出力設定&#xD;&#xA;" imageMso="CalculatedYesNo" onAction="MyOutputConfig_OnClick" />
         </group>
         <group id="MyGroup4" label="断熱工事">
           <button id="MyButton4.1" size="large" label="ダミー&#xD;&#xA;"/>

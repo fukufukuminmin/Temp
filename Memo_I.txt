@@ -53,9 +53,23 @@ AC.ã“h‰ñ”[‰ñ]
 AD.CHEKCK
 
 ’f”MŒú‚Ý(’f”MÞ,‰·“x,”zŠÇŒa)[mm]
+ŒW”´ÙÎÞ[m/pc]=(0.6@<=1B,0.8@<=2.5B,1.0@<=6B,1.2@<=12B,2.0@<=14B)
+’f”M”zŠÇ‘Š“–’·[m]=”zŠÇ’·[m]+´ÙÎÞ”[pc]*’f”M´ÙÎÞŒW”[m/pc]+Ì×Ý¼Þ‡Œv”[pc]*’f”MÌ×Ý¼ÞŒW”(=0.5)[m/pc]+•Ù”[pc]*’f”M•ÙŒW”(=1.8)[m/pc]
+’f”M”zŠÇ‘Š“–’·‚Š[m]=’f”M”zŠÇ‘Š“–’·[m]*”zŠÇ’·‚Š[m]/”zŠÇ’·[m]
+’f”MH”[•û]=’f”M”zŠÇ‘Š“–’·[m]*’f”MH”•àŠ|[•û/m]
+’f”MH”‚Š[•û]=’f”M”zŠÇ‘Š“–’·‚Š[m]*’f”MH”•àŠ|[•û/m]
+’f”MÞ—¿”ï[k\]=’f”M”zŠÇ‘Š“–’·[m]*’f”MÞ—¿’P‰¿[k\/m]
 
+’f”MÞ—¿”ï•â³[k\]=’f”MÞ—¿”ï[k\]*’f”MÞ—¿ŒW”[-]
+’f”MH’À•â³[k\]=’f”MH”[•û]*’f”MH’À’P‰¿[k\/•û]*’f”MHŽ–ŒW”[-]
+’f”MH”‚Š•â³[•û]=’f”MH”‚Š[•û]*’f”MH”‚Š•â³ŒW”(=0.08)[-]
+’f”MH’À‚Š•â³[k\]=’f”MH”‚Š•â³[•û]*’f”MH’À’P‰¿[k\/•û]*’f”MHŽ–ŒW”[-]
+’f”M’¼ÚHŽ–”ï[k\]=’f”MH’À•â³[k\]+’f”MH’À‚Š•â³[k\]
 
-
+’f”M•t‘ÑHŽ–”ï[k\]=’f”M’¼ÚHŽ–”ï[k\]*’f”M•t‘ÑHŽ–ŒW”(=0.125)[-]
+’f”M“ÁŽêHŽ–”ï[k\]=’f”M‘«êHŽ–”ï[k\]+’f”MˆÀ‘S‘Îô”ï[k\]+’f”M‰¼Ý—{¶”ï[k\]+’f”M‚»‚Ì‘¼HŽ–”ï[k\](‘S‚ÄŽè“ü—Í)
+’f”MŒo”ï[k\]=(’f”MÞ—¿”ï[k\]+’f”M’¼ÚHŽ–”ï[k\]+’f”M•t‘ÑHŽ–”ï[k\]+’f”M“ÁŽêHŽ–”ï[k\])*’f”MŒo”ïŒW”(=0.1)[-]
+’f”MHŽ–”ï‡Œv[k\]=’f”MÞ—¿”ï[k\]+’f”M’¼ÚHŽ–”ï[k\]+’f”M•t‘ÑHŽ–”ï[k\]+’f”M“ÁŽêHŽ–”ï[k\]+’f”MŒo”ï[k\]
 
 
 ’f”M’·(’f”MÞ,’f”MŒú‚Ý¹°½,”zŠÇŒa)[m]=ƒ°(”—Ê”zŠÇ[m])

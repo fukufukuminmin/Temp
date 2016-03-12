@@ -1,0 +1,220 @@
+  材質_配管() As String
+  配管長() As Single
+  工数_配管() As Single
+  工数_溶接() As Single
+  工数_その他() As Single
+  工賃_配管() As Single
+  工賃_溶接() As Single
+  工賃_その他() As Single
+  数量_DB() As Single
+  数量_BM() As Single
+  重量_配管() As Single
+
+
+  TotalLengs(m) = Cells(m + 4, 22)        '配管長
+  TotalQuaFlange(m) = Cells(m + 399, 22)  'ﾌﾗﾝｼﾞ数
+  TotalQuaElbow(m) = Cells(m + 230, 22)   'ｴﾙﾎﾞ数
+  TotalQuaTee(m) = Cells(m + 295, 22)     'ﾃｨｰ数
+                                          'ｸﾛｽ数(なし)
+  TotalQuaRedu(m) = Cells(m + 347, 22)    'ﾚﾃﾞｭｰｻ数
+
+  TotalPipeCost(m) = Cells(m + 82, 22)    '配管材料費
+  TotalElbowCost(m) = Cells(m + 269, 22)  'ｴﾙﾎﾞ材料費
+  TotalTeeCost(m) = Cells(m + 321, 22)    'ﾃｨｰ材料費
+                                          'ｸﾛｽ材料費(なし)
+  TotalReduCost(m) = Cells(m + 373, 22)   'ﾚﾃﾞｭｰｻ材料費
+  TotalFlangeCost(m) = Cells(m + 447, 22) 'ﾌﾗﾝｼﾞ材料費
+
+  TotalBM(m) = Cells(m + 4, 23)           'B-m
+  TotalPipeWei(m) = Cells(m + 123, 22)    '配管重量
+
+
+■TotalData
+
+  材質_配管 As String
+
+  配管長 As Single
+  配管長_火気 As Single
+  配管長_高所 As Single
+'
+'  数量_フランジ As Integer
+'
+  数量_エルボ As Integer
+  数量_ティー As Integer
+  数量_レデューサ As Integer
+  '数量_クロス As Integer
+  数量_弁ゲート As Integer
+  数量_弁グローブ As Integer
+  数量_弁ボール As Integer
+  '数量_弁バタフライ As Integer
+  '数量_弁プラグ As Integer
+  数量_弁ダイヤフラム As Integer
+  数量_弁逆止 As Integer
+  数量_弁計装 As Integer
+  数量_流量計 As Integer
+  数量_計器 As Integer
+  数量_その他 As Integer
+
+  'ここから集計値----------------------------
+  配管長_CLOSE As Single
+  材料費_配管 As Single
+  材料費_フランジ As Single
+  材料費_エルボ As Single
+  材料費_ティー As Single
+  材料費_レデューサ As Single
+  '材料費_クロス As Single
+  材料費_弁ゲート As Single
+  材料費_弁グローブ As Single
+  材料費_弁ボール As Single
+  '材料費_弁バタフライ As Single
+  '材料費_弁プラグ As Single
+  材料費_弁ダイヤフラム As Single
+  材料費_弁逆止 As Single
+  数量_フランジ合計 As Integer
+  数量_弁一般 As Integer
+  数量_計装品 As Integer
+  数量_DB As Single
+  数量_BM As Single
+  重量_配管 As Single
+  工数_配管 As Single
+  工数_配管TIG As Single
+  工数_配管XRAY As Single
+  工数_配管エルボ As Single
+  工数_配管ティー As Single
+  工数_配管レデューサ As Single
+  '工数_配管クロス as Single
+  工数_配管フランジ溶接 As Single
+  工数_配管フランジ取付 As Single
+  工数_弁一般 As Single
+  工数_弁ダイヤフラム As Single
+  工数_計装品 As Single
+  工数_弁 As Single
+  断熱_配管相当長 As Single
+  断熱_工数 As Single
+  断熱_材料費 As Single
+
+
+
+  If ret = True Then ret = CheckAndReadInputData()
+  If ret = True Then ret = CheckInputData()
+  If ret = True Then ret = CalcEachQuantity()
+  If ret = True Then ret = CheckAndReadDbData()
+  If ret = True Then ret = CalcEachCost()
+  If ret = True Then ret = CalcTotalCost()
+
+---------------------------------------------------------------------------------------
+■EData
+  数量_その他 As Integer
+  数量_弁計装 As Integer
+  数量_流量計 As Integer
+  数量_計器 As Integer
+---------------------------------
+  数量_弁一般 As Integer
+  数量_計装品 As Integer
+  工数_弁一般 As Single
+  工数_弁ダイヤフラム As Single
+  工数_計装品 As Single
+  工数_弁類 As Single
+
+■TData
+  数量_その他 As Integer
+  数量_弁計装 As Integer
+  数量_流量計 As Integer
+  数量_計器 As Integer
+---------------------------------
+  数量_弁一般 As Integer
+  数量_計装品 As Integer
+  工数_弁一般 As Single
+  工数_弁ダイヤフラム As Single
+  工数_計装品 As Single
+  工数_弁類 As Single
+
+※計装品は計器を含んでいない！！！！！！！！！！！！！！！！！！！！！！！！
+CalcEachQuantity
+  .数量_弁一般 = .数量_弁ゲート + .数量_弁グローブ + .数量_弁ボール + .数量_弁逆止
+  .数量_計装品 = .数量_弁計装 + .数量_流量計
+CalcEachCost
+  .工数_弁一般 = .数量_弁一般 * .工数歩掛_弁一般取付
+  .工数_弁ダイヤフラム = .数量_弁ダイヤフラム * .工数歩掛_弁ダイヤフラム取付
+  .工数_計装品 = .数量_計装品 * .工数歩掛_計装品取付
+  .工数_弁類 = .工数_弁一般 + .工数_弁ダイヤフラム + .工数_計装品
+CalcTotalCost
+  tdata(j).数量_弁一般 = tdata(j).数量_弁一般 + edata(i).数量_弁一般
+  tdata(j).数量_計装品 = tdata(j).数量_計装品 + edata(i).数量_計装品
+  tdata(j).工数_弁一般 = tdata(j).工数_弁一般 + edata(i).工数_弁一般
+  tdata(j).工数_計装品 = tdata(j).工数_計装品 + edata(i).工数_計装品
+  tdata(j).工数_弁類 = tdata(j).工数_弁類 + edata(i).工数_弁類
+---------------------------------------------------------------------------------------
+
+■EData
+  工数_配管 As Single
+  工数_配管TIG As Single
+  工数_配管XRAY As Single
+  工数_配管エルボ As Single
+  工数_配管ティー As Single
+  工数_配管レデューサ As Single
+  '工数_配管クロス as Single
+  工数_配管フランジ溶接 As Single
+  工数_配管フランジ取付 As Single
+  工数_弁一般 As Single
+  工数_弁ダイヤフラム As Single
+  工数_計装品 As Single
+  工数_弁類 As Single
+■TData
+  工数_配管 As Single
+  工数_配管TIG As Single
+  工数_配管XRAY As Single
+  工数_配管エルボ As Single
+  工数_配管ティー As Single
+  工数_配管レデューサ As Single
+  '工数_配管クロス as Single
+  工数_配管フランジ溶接 As Single
+  工数_配管フランジ取付 As Single
+  工数_弁一般 As Single
+  工数_弁ダイヤフラム As Single
+  工数_計装品 As Single
+  工数_弁類 As Single
+
+CalcEachCost
+  .工数_配管 = .配管長 * .工数歩掛_配管
+  '.工数_配管TIG = .配管長TIG * .工数歩掛_配管     '要チェック----------------
+  '.工数_配管XRAY = .配管長XRAY * .工数歩掛_配管   '要チェック----------------
+  .工数_配管エルボ = .数量_エルボ * .工数歩掛_突合せ溶接 * 2
+  .工数_配管ティー = .数量_ティー * .工数歩掛_突合せ溶接 * 2.5
+  .工数_配管レデューサ = .数量_レデューサ * .工数歩掛_突合せ溶接 * 2
+  '.工数_配管クロス = .数量_クロス * .工数歩掛_突合せ溶接 * 4
+  .工数_配管フランジ溶接 = .数量_フランジ合計 * .工数歩掛_フランジ溶接
+  .工数_配管フランジ取付 = .数量_フランジ合計 * .工数歩掛_フランジ取付
+  .工数_弁一般 = .数量_弁一般 * .工数歩掛_弁一般取付
+  .工数_弁ダイヤフラム = .数量_弁ダイヤフラム * .工数歩掛_弁ダイヤフラム取付
+  .工数_計装品 = .数量_計装品 * .工数歩掛_計装品取付
+  .工数_弁類 = .工数_弁一般 + .工数_弁ダイヤフラム + .工数_計装品
+CalcTotalCost
+  tdata(j).工数_配管 = tdata(j).工数_配管 + edata(i).工数_配管
+  tdata(j).工数_配管TIG = tdata(j).工数_配管TIG + edata(i).工数_配管TIG
+  tdata(j).工数_配管XRAY = tdata(j).工数_配管XRAY + edata(i).工数_配管XRAY
+  tdata(j).工数_配管エルボ = tdata(j).工数_配管エルボ + edata(i).工数_配管エルボ
+  tdata(j).工数_配管ティー = tdata(j).工数_配管ティー + edata(i).工数_配管ティー
+  tdata(j).工数_配管レデューサ = tdata(j).工数_配管レデューサ + edata(i).工数_配管レデューサ
+  'tdata(j).工数_配管クロス = tdata(j).工数_配管クロス + edata(i).工数_配管クロス
+  tdata(j).工数_配管フランジ溶接 = tdata(j).工数_配管フランジ溶接 + edata(i).工数_配管フランジ溶接
+  tdata(j).工数_配管フランジ取付 = tdata(j).工数_配管フランジ取付 + edata(i).工数_配管フランジ取付
+  tdata(j).工数_弁一般 = tdata(j).工数_弁一般 + edata(i).工数_弁一般
+  tdata(j).工数_弁ダイヤフラム = tdata(j).工数_弁ダイヤフラム + edata(i).工数_弁ダイヤフラム
+  tdata(j).工数_計装品 = tdata(j).工数_計装品 + edata(i).工数_計装品
+  tdata(j).工数_弁類 = tdata(j).工数_弁類 + edata(i).工数_弁類
+
+Each
+配管組立,ﾌﾗﾝｼﾞ締結,弁類取付,溶接
+    c = c + 1: rngOutput.Cells(r, c) = edata(r).工数_配管
+    c = c + 1: rngOutput.Cells(r, c) = edata(r).工数_配管フランジ取付
+    c = c + 1: rngOutput.Cells(r, c) = edata(r).工数_弁類
+    c = c + 1: rngOutput.Cells(r, c) = edata(r).工数_配管フランジ溶接 + edata(r).工数_配管エルボ _
+      + edata(r).工数_配管ティー + edata(r).工数_配管レデューサ
+
+Summary
+配管+ﾌﾗﾝｼﾞ,溶接,弁類取付
+    c = c + 1: .Cells(1, c) = (tdata(i).工数_配管 + tdata(i).工数_配管フランジ取付) / 7#
+    c = c + 1: .Cells(1, c) = (tdata(i).工数_配管フランジ溶接 + tdata(i).工数_配管エルボ _
+      + tdata(i).工数_配管ティー + tdata(i).工数_配管レデューサ) / 7#
+    c = c + 1: .Cells(1, c) = tdata(i).工数_弁類 / 7#
