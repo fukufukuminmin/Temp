@@ -1,0 +1,282 @@
+<mso:cmd app="Excel" dt="1" /><mso:customUI xmlns:msox="http://schemas.microsoft.com/office/2006/01/customui/special" xmlns:mso="http://schemas.microsoft.com/office/2009/07/customui">
+<mso:ribbon>
+<mso:qat>
+<mso:sharedControls>
+<mso:separator idQ="msox:sep0" visible="true" insertBeforeQ="mso:FileNewDefault"/>
+<mso:control idQ="mso:ReviewShareWorkbook" visible="true" insertBeforeQ="mso:FileNewDefault"/>
+<mso:control idQ="mso:ReviewRestrictEditing" visible="true" insertBeforeQ="mso:FileNewDefault"/>
+<mso:control idQ="mso:ReadOnly" visible="true" insertBeforeQ="mso:FileNewDefault"/>
+<mso:separator idQ="msox:sep1" visible="true" insertBeforeQ="mso:FileNewDefault"/>
+<mso:control idQ="mso:FileNewDefault" visible="true"/>
+<mso:control idQ="mso:FileOpen" visible="true"/>
+<mso:control idQ="mso:FileOpenRecentFile" visible="true" insertBeforeQ="mso:FileSave"/>
+<mso:separator idQ="msox:sep2" visible="true" insertBeforeQ="mso:FileSave"/>
+<mso:control idQ="mso:FileSave" visible="true"/>
+<mso:control idQ="mso:FileSaveAs" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:control idQ="mso:FileSaveAsPdfOrXps" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:separator idQ="msox:sep3" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:control idQ="mso:PageSetupPageDialog" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:control idQ="mso:GroupPrintPreviewPrint" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:control idQ="mso:FilePrintMenu" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:control idQ="mso:ViewRulerExcel" label="" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:separator idQ="msox:sep4" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:control idQ="mso:ObjectsSelect" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:separator idQ="msox:sep5" visible="true" insertBeforeQ="mso:Undo"/>
+<mso:control idQ="mso:Undo" visible="true"/>
+<mso:control idQ="mso:Redo" visible="true"/>
+<mso:separator idQ="msox:sep6" visible="true"/>
+<mso:control idQ="mso:Filter" visible="true"/>
+<mso:control idQ="mso:AdvancedFilterDialog" visible="true"/>
+<mso:control idQ="mso:FilterReapply" visible="true"/>
+<mso:control idQ="mso:SortClear" visible="true"/>
+<mso:separator idQ="msox:sep7" visible="true"/>
+<mso:control idQ="mso:ViewFreezePanesGallery" visible="true"/>
+<mso:separator idQ="msox:sep8" visible="true"/>
+<mso:control idQ="mso:GroupWorkbookViews" visible="true"/>
+<mso:control idQ="mso:GroupWindow" visible="true"/>
+<mso:control idQ="mso:WindowSwitchWindowsMenuExcel" visible="true"/>
+<mso:separator idQ="msox:sep9" visible="true"/>
+</mso:sharedControls>
+</mso:qat>
+<mso:tabs>
+<mso:tab id="tb.MyTab1" label="MyTab1" insertBeforeQ="mso:TabHome">
+<mso:group id="gr.MyEdit" label="MyEdit" highDensityLayout="true">
+<mso:box id="bx.MyEdit1" boxStyle="vertical">
+<mso:control idQ="mso:Repeat" visible="true"/>
+<mso:gallery idQ="mso:Undo" showInRibbon="false" visible="true"/>
+<mso:gallery idQ="mso:Redo" showInRibbon="false" visible="true"/>
+</mso:box>
+<mso:box id="bx.MyEdit2" boxStyle="vertical">
+<mso:control idQ="mso:Cut" visible="true"/>
+<mso:control idQ="mso:CopySplitButton" visible="true"/>
+<mso:control idQ="mso:PasteMenu" visible="true"/>
+</mso:box>
+<mso:box id="bx.MyEdit3" boxStyle="vertical">
+<mso:control idQ="mso:PasteSpecialDialog" visible="true"/>
+<mso:control idQ="mso:PasteFormatting" visible="true"/>
+<mso:control idQ="mso:FormatPainter" visible="true"/>
+</mso:box>
+</mso:group>
+<mso:group id="gr.MyFont" label="MyFont" highDensityLayout="true">
+<mso:box id="bx.MyFont1" boxStyle="horizontal">
+<mso:comboBox idQ="mso:Font" visible="true" sizeString="wwwwwwww"/>
+<mso:comboBox idQ="mso:FontSize" visible="true" sizeString="ww"/>
+</mso:box>
+<mso:box id="bx.MyFont21" boxStyle="horizontal">
+<mso:control idQ="mso:Bold" visible="true"/>
+<mso:control idQ="mso:Italic" visible="true"/>
+<mso:control idQ="mso:UnderlineGallery" visible="true"/>
+<mso:control idQ="mso:Strikethrough" visible="true"/>
+<mso:control idQ="mso:FontSizeIncrease" visible="true"/>
+<mso:control idQ="mso:FontSizeDecrease" visible="true"/>
+</mso:box>
+<mso:box id="bx.MyFont3" boxStyle="horizontal">
+<mso:gallery idQ="mso:CellFillColorPicker" showInRibbon="false" visible="true"/>
+<mso:gallery idQ="mso:FontColorPicker" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:BordersGallery" visible="true"/>
+<mso:control idQ="mso:BorderDiagonalDown" visible="true"/>
+<mso:control idQ="mso:BorderDiagonalUp" visible="true"/>
+</mso:box>
+<mso:dialogBoxLauncher>
+<mso:control idQ="mso:FormatCellsFontDialog" visible="true"/>
+</mso:dialogBoxLauncher>
+</mso:group>
+<mso:group id="gr.MyLayout" label="MyLayout" highDensityLayout="true">
+<mso:box id="bx.MyLayout1" boxStyle="horizontal">
+<mso:control idQ="mso:AlignLeft" visible="true"/>
+<mso:control idQ="mso:AlignCenter" visible="true"/>
+<mso:control idQ="mso:AlignRight" visible="true"/>
+<mso:control idQ="mso:ParagraphDistributed" visible="true"/>
+</mso:box>
+<mso:box id="bx.MyLayout2" boxStyle="horizontal">
+<mso:control idQ="mso:AlignTopExcel" visible="true"/>
+<mso:control idQ="mso:AlignMiddleExcel" visible="true"/>
+<mso:control idQ="mso:AlignBottomExcel" visible="true"/>
+<mso:control idQ="mso:VerticallyDistributed" visible="true"/>
+</mso:box>
+<mso:box id="bx.MyLayout3" boxStyle="horizontal">
+<mso:control idQ="mso:IndentDecreaseExcel" visible="true"/>
+<mso:control idQ="mso:IndentIncreaseExcel" visible="true"/>
+<mso:control idQ="mso:WrapText" visible="true"/>
+<mso:control idQ="mso:OrientationMenu" visible="true"/>
+</mso:box>
+<mso:separator id="sp.MyLayout1"/>
+<mso:box id="bx.MyLayout4" boxStyle="horizontal">
+<mso:control idQ="mso:MergeCells" visible="true"/>
+<mso:control idQ="mso:UnmergeCells" visible="true"/>
+</mso:box>
+<mso:box id="bx.MyLayout5" boxStyle="horizontal">
+<mso:control idQ="mso:MergeCellsAcross" visible="true"/>
+<mso:control idQ="mso:MergeCenter" visible="true"/>
+</mso:box>
+<mso:dialogBoxLauncher>
+<mso:control idQ="mso:CellAlignmentOptions" visible="true"/>
+</mso:dialogBoxLauncher>
+</mso:group>
+<mso:group id="gr.MyNum" label="MyNum" highDensityLayout="true">
+<mso:box id="bx.MyNum1" boxStyle="horizontal">
+<mso:comboBox idQ="mso:NumberFormatGallery" visible="true" sizeString="xxxxxxxx"/>
+</mso:box>
+<mso:box id="bx.MyNum2" boxStyle="horizontal">
+<mso:control idQ="mso:AccountingFormatMenu" visible="true"/>
+<mso:control idQ="mso:PercentStyle" visible="true"/>
+<mso:control idQ="mso:CommaStyle" visible="true"/>
+</mso:box>
+<mso:box id="bx.MyNum3" boxStyle="horizontal">
+<mso:control idQ="mso:DecimalsIncrease" visible="true"/>
+<mso:control idQ="mso:DecimalsDecrease" visible="true"/>
+<mso:control idQ="mso:AutoSumMenu" visible="true"/>
+</mso:box>
+<mso:dialogBoxLauncher>
+<mso:control idQ="mso:FormatCellsNumberDialog" visible="true"/>
+</mso:dialogBoxLauncher>
+</mso:group>
+<mso:group id="gr.MyData" label="MyData" highDensityLayout="true">
+<mso:box id="bx.MyData1" boxStyle="horizontal">
+<mso:control idQ="mso:SelectMenuExcel" visible="true"/>
+<mso:control idQ="mso:OutlineGroupMenu" visible="true"/>
+<mso:control idQ="mso:OutlineUngroupMenu" visible="true"/>
+<mso:control idQ="mso:FindDialogExcel" visible="false"/>
+<mso:control idQ="mso:ReplaceDialog" visible="false"/>
+</mso:box>
+<mso:box id="bx.MyData2" boxStyle="horizontal">
+<mso:control idQ="mso:Filter" visible="true"/>
+<mso:control idQ="mso:AdvancedFilterDialog" visible="true"/>
+<mso:control idQ="mso:FilterReapply" visible="true"/>
+<mso:control idQ="mso:SortClear" visible="true"/>
+</mso:box>
+<mso:box id="bx.MyData3" boxStyle="horizontal">
+<mso:control idQ="mso:SortAscendingExcel" visible="true"/>
+<mso:control idQ="mso:SortDescendingExcel" visible="true"/>
+<mso:control idQ="mso:SortCustomExcel" visible="true"/>
+<mso:control idQ="mso:ConvertTextToTable" visible="true"/>
+</mso:box>
+</mso:group>
+<mso:group id="gr.MyTools" label="MyTools" highDensityLayout="true">
+<mso:box id="bx.MyTools1" boxStyle="vertical">
+<mso:control idQ="mso:ChartInsert" visible="true"/>
+<mso:control idQ="mso:PictureInsertFromFile" visible="true"/>
+<mso:control idQ="mso:ClipArtInsert" visible="true"/>
+<mso:gallery idQ="mso:ShapesInsertGallery" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:SmartArtInsert" visible="true"/>
+<mso:control idQ="mso:Camera" visible="true"/>
+<mso:control idQ="mso:TextBoxInsertMenu" visible="true"/>
+<mso:gallery idQ="mso:ScreenshotInsertGallery" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:PivotTableInsertMenu" visible="true"/>
+</mso:box>
+<mso:separator id="sp.MyTools1"/>
+<mso:box id="bx.MyTools2" boxStyle="vertical">
+<mso:control idQ="mso:ObjectBringToFrontMenu" visible="true"/>
+<mso:control idQ="mso:ObjectSendToBackMenu" visible="true"/>
+<mso:control idQ="mso:ObjectsSelect" visible="true"/>
+<mso:control idQ="mso:SelectionPane" visible="false"/>
+<mso:control idQ="mso:ObjectsGroupMenu" visible="true"/>
+<mso:gallery idQ="mso:ObjectRotateGallery" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:ObjectAlignMenu" visible="true"/>
+<mso:control idQ="mso:ObjectEditShapeMenu" visible="true"/>
+<mso:control idQ="mso:SnapToGrid" visible="true"/>
+<mso:control idQ="mso:SnapToShapes" visible="true"/>
+</mso:box>
+<mso:dialogBoxLauncher>
+<mso:control idQ="mso:ObjectFormatDialog" visible="true"/>
+</mso:dialogBoxLauncher>
+</mso:group>
+<mso:group id="gr.MyView" label="MyView" highDensityLayout="true">
+<mso:control idQ="mso:ZoomCurrent100" visible="true"/>
+<mso:gallery idQ="mso:ZoomClassic" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:ZoomDialog" visible="true"/>
+<mso:control idQ="mso:ViewFormulaBar" visible="true"/>
+<mso:control idQ="mso:ViewHeadings" visible="true"/>
+<mso:control idQ="mso:GridlinesExcel" visible="true"/>
+<mso:dialogBoxLauncher>
+<mso:control idQ="mso:ViewCustomViews" visible="true"/>
+</mso:dialogBoxLauncher>
+</mso:group>
+</mso:tab>
+<mso:tab id="tb.MyTab2" label="MyTab2" insertBeforeQ="mso:TabHome">
+<mso:group id="gr.MyInsert" label="MyInsert" highDensityLayout="true">
+<mso:control idQ="mso:ChartInsert" visible="true"/>
+<mso:control idQ="mso:PictureInsertFromFile" visible="true"/>
+<mso:control idQ="mso:ClipArtInsert" visible="true"/>
+<mso:gallery idQ="mso:ShapesInsertGallery" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:SmartArtInsert" visible="true"/>
+<mso:gallery idQ="mso:ScreenshotInsertGallery" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:TextBoxInsertMenu" visible="true"/>
+<mso:control idQ="mso:OleObjectctInsert" visible="true"/>
+<mso:control idQ="mso:BarcodeInsert" visible="true"/>
+<mso:control idQ="mso:LabelInsert" visible="true"/>
+<mso:gallery idQ="mso:InsertBuildingBlocksEquationsGallery" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:SymbolInsert" visible="true"/>
+<mso:control idQ="mso:HyperlinkInsert" visible="true"/>
+<mso:control idQ="mso:SparklineLineInsert" visible="true"/>
+<mso:control idQ="mso:SparklineColumnInsert" visible="true"/>
+<mso:control idQ="mso:SparklineWinLossInsert" visible="true"/>
+<mso:control idQ="mso:SlicerInsert" visible="true"/>
+</mso:group>
+<mso:group id="gr.MyPage" label="MyPage" highDensityLayout="true">
+<mso:gallery idQ="mso:PageMarginsGallery" showInRibbon="false" visible="true"/>
+<mso:gallery idQ="mso:PageOrientationGallery" showInRibbon="false" visible="true"/>
+<mso:gallery idQ="mso:PageSizeGallery" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:PrintAreaMenu" visible="true"/>
+<mso:control idQ="mso:PageBreakMenu" visible="true"/>
+<mso:control idQ="mso:PageSetupPageDialog" visible="true"/>
+<mso:control idQ="mso:SheetBackground" visible="true"/>
+<mso:control idQ="mso:PrintTitles" visible="true"/>
+<mso:dialogBoxLauncher>
+<mso:control idQ="mso:PageSetupPageDialog" visible="true"/>
+</mso:dialogBoxLauncher>
+</mso:group>
+<mso:group id="gr.MyNames" label="MyNames" highDensityLayout="true">
+<mso:control idQ="mso:NameManager" visible="true"/>
+<mso:control idQ="mso:NameDefineMenu" visible="true"/>
+<mso:gallery idQ="mso:NameUseInFormula" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:NameCreateFromSelection" visible="true"/>
+</mso:group>
+<mso:group id="gr.MyCalc" label="MyCalc" highDensityLayout="true">
+<mso:control idQ="mso:FunctionWizard" visible="true"/>
+<mso:control idQ="mso:AutoSumMenu" visible="true"/>
+<mso:control idQ="mso:TracePrecedents" visible="true"/>
+<mso:control idQ="mso:TraceDependents" visible="true"/>
+<mso:control idQ="mso:TraceRemoveArrowsMenu" visible="true"/>
+<mso:control idQ="mso:ShowFormulas" visible="true"/>
+<mso:control idQ="mso:ErrorCheckingMenu" visible="true"/>
+<mso:control idQ="mso:FormulaEvaluate" visible="true"/>
+<mso:control idQ="mso:WatchWindow" visible="true"/>
+<mso:control idQ="mso:CalculationOptionsMenu" visible="true"/>
+<mso:control idQ="mso:CalculateNow" visible="true"/>
+<mso:control idQ="mso:CalculateSheet" visible="true"/>
+</mso:group>
+<mso:group id="gr.MyComments" label="MyComments" highDensityLayout="true">
+<mso:control idQ="mso:ReviewNewComment" visible="true"/>
+<mso:control idQ="mso:ReviewDeleteComment" visible="true"/>
+<mso:control idQ="mso:ReviewPreviousComment" visible="true"/>
+<mso:control idQ="mso:ReviewNextComment" visible="true"/>
+<mso:control idQ="mso:ReviewShowOrHideComment" visible="true"/>
+<mso:control idQ="mso:ReviewShowAllComments" visible="true"/>
+<mso:control idQ="mso:ReviewShowInk" visible="true"/>
+</mso:group>
+<mso:group id="gr.MyOthers" label="MyOthers" highDensityLayout="true">
+<mso:control idQ="mso:ConditionalFormattingMenu" visible="true"/>
+<mso:gallery idQ="mso:FormatAsTableGallery" showInRibbon="false" visible="true"/>
+<mso:gallery idQ="mso:CellStylesGallery" showInRibbon="false" visible="true"/>
+<mso:control idQ="mso:FormatCellsMenu" visible="true"/>
+<mso:control idQ="mso:AutoSumMenu" visible="true"/>
+<mso:control idQ="mso:FillMenu" visible="true"/>
+<mso:control idQ="mso:ClearMenu" visible="true"/>
+<mso:control idQ="mso:SortFilterMenu" visible="true"/>
+<mso:control idQ="mso:SelectMenuExcel" visible="true"/>
+</mso:group>
+</mso:tab>
+<mso:tab idQ="mso:TabHome" visible="false"/>
+<mso:tab idQ="mso:TabInsert" visible="false"/>
+<mso:tab idQ="mso:TabPageLayoutExcel" visible="false"/>
+<mso:tab idQ="mso:TabFormulas" visible="false"/>
+<mso:tab idQ="mso:TabData" visible="true"/>
+<mso:tab idQ="mso:TabReview" visible="true"/>
+<mso:tab idQ="mso:TabView" visible="false"/>
+<mso:tab idQ="mso:TabAddIns" visible="true"/>
+<mso:tab idQ="mso:TabBackgroundRemoval" visible="true"/>
+</mso:tabs>
+</mso:ribbon>
+</mso:customUI>
+
