@@ -9,7 +9,8 @@
   --myrows: 2:
   --mycols: 3;
   --myborder: 4px;
-  --mytitlesize: 32px;
+  --mytitlfontesize: 32px;
+  --mymenu0fontsize: 12px;
 }
 html, body {
   height: 100%;
@@ -71,8 +72,6 @@ html, body {
   box-sizing: border-box;
   width: calc(100%/3);
   height: calc(100%/2);
-  width: calc(100% / var(--myrows));
-  height: calc(100% / var(--mycols));
 }
 #main {
   visibility: visible;
@@ -80,15 +79,12 @@ html, body {
 #menu0, #menu1, #menu4, #menu6 {
   visibility: hidden;
 }
+#menu4>tbody>tr>td table td, #menu6>tbody>tr>td table td{
+  background: none;
+}
 #main td:hover, table#menu0 td:hover, #menu1 td:hover, #menu4 td:hover, #menu6 td:hover {
   background: gray;
 }
-table#menu4>tbody>tr>td:hover {
-  border-color: red;
-}
-table#menu4>tbody>tr>td table td:hover {
-}
-
 
 /*メニューアイテム共通*/
 #menu0 td, #menu0 th,
@@ -97,14 +93,22 @@ table#menu4>tbody>tr>td table td:hover {
 #menu6 td, #menu6 th {
   margin: 0px;
   padding: 0px;
-  border: solid 5px #FFFFFF;
+  border: solid 4px #FFFFFF;
   border: solid var(--myborder) #FFFFFF;
   background: black;
   color: white;
   font-family: "MS Gothic";
+/*
   font-size: 32px;
   font-size: var(--myfontsize);
+*/
+  text-align: center;
+  vertical-align: center;
   box-sizing: border-box;
+}
+#menu0 td {
+  font-size: 24px;
+  font-size: var(--mymenu0fontsize);
 }
 
 #grid11 { background: #FFFF00; }
@@ -198,6 +202,7 @@ function myonload() {
   }, false);
   var menu1 = document.getElementById("menu1");
   menu1.addEventListener("dblclick", function(e) {
+    document.getElementById("menu0").style.visibility = 'hidden';
     document.getElementById("menu1").style.visibility = 'hidden';
     document.getElementById("main").style.visibility = 'visible';
     e.preventDefault();
@@ -206,6 +211,7 @@ function myonload() {
   }, false);
   var menu4 = document.getElementById("menu4");
   menu4.addEventListener("dblclick", function(e) {
+    document.getElementById("menu0").style.visibility = 'hidden';
     document.getElementById("menu4").style.visibility = 'hidden';
     document.getElementById("main").style.visibility = 'visible';
     e.preventDefault();
@@ -214,6 +220,7 @@ function myonload() {
   }, false);
   var menu6 = document.getElementById("menu6");
   menu6.addEventListener("dblclick", function(e) {
+    document.getElementById("menu0").style.visibility = 'hidden';
     document.getElementById("menu6").style.visibility = 'hidden';
     document.getElementById("main").style.visibility = 'visible';
     e.preventDefault();
@@ -221,12 +228,14 @@ function myonload() {
     return false;
   }, false);
 }
+/*
 function setClassDisplay(className, display) {
   c = document.getElementsByClassName(className);
   for(var e of c) {
     e.style.display = display;
   }
 }
+*/
 </script>
 </head>
 <body onload="myonload();">
@@ -303,7 +312,7 @@ function setClassDisplay(className, display) {
 <table id="menu1" class="menu">
   <tr>
     <td>
-      <table class="subtable1">
+      <table>
         <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
         <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
         <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -318,7 +327,7 @@ function setClassDisplay(className, display) {
 </table>
 <table id="menu4" class="menu">
   <tr>
-    <td><table class="subtable4"><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
     <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
     <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
     <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
@@ -352,8 +361,29 @@ function setClassDisplay(className, display) {
 </table>
 <table id="menu6" class="menu">
   <tr>
-    <td id="menu6sel01">6画面選択</td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+  </tr>
   <tr>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+  </tr>
 </table>
 <script>
 var displaySize = { width: 1366, height: 768 };
