@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title></title>
+<style>
+:root {
+  --myrows: 2:
+  --mycols: 3;
+  --myborder: 4px;
+  --mytitlesize: 32px;
+}
+html, body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  border-width: 0px;
+  background: black;
+}
+#main {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
+#menu0 {
+  position: fixed;
+  top: 0px;
+  left: 0%;
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
+  background-color: black;
+  width: 10%;
+  height: 100%;
+}
+#menu1, #menu4, #menu6 {
+  position: fixed;
+  top: 0px;
+  left: 10%;
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
+  background-color: black;
+  width: 90%;
+  height: 100%;
+}
+#menu1 table, #menu4 table, #menu6 table {
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
+  width: 100%;
+  height: 100%;
+}
+#main td, #main th {
+  margin: 0px;
+  padding: 0px;
+  border: solid 4px #FFFFFF;
+  border: solid var(--myborder) #FFFFFF;
+  background: black;
+  color: white;
+  font-family: "MS Gothic";
+  font-size: 32px;
+  font-size: var(--myfontsize);
+  box-sizing: border-box;
+  width: calc(100%/3);
+  height: calc(100%/2);
+  width: calc(100% / var(--myrows));
+  height: calc(100% / var(--mycols));
+}
+#main {
+  visibility: visible;
+}
+#menu0, #menu1, #menu4, #menu6 {
+  visibility: hidden;
+}
+#main td:hover, table#menu0 td:hover, #menu1 td:hover, #menu4 td:hover, #menu6 td:hover {
+  background: gray;
+}
+table#menu4>tbody>tr>td:hover {
+  border-color: red;
+}
+table#menu4>tbody>tr>td table td:hover {
+}
+
+
+/*メニューアイテム共通*/
+#menu0 td, #menu0 th,
+#menu1 td, #menu1 th,
+#menu4 td, #menu4 th,
+#menu6 td, #menu6 th {
+  margin: 0px;
+  padding: 0px;
+  border: solid 5px #FFFFFF;
+  border: solid var(--myborder) #FFFFFF;
+  background: black;
+  color: white;
+  font-family: "MS Gothic";
+  font-size: 32px;
+  font-size: var(--myfontsize);
+  box-sizing: border-box;
+}
+
+#grid11 { background: #FFFF00; }
+#grid12 { background: #FF00FF; }
+#grid13 { background: #008000; }
+#grid21 { background: #00FFFF; }
+#grid22 { background: #0000FF; }
+#grid23 { background: #808080; }
+#main object {
+  width: 320;
+  height: 240;
+  pointer-events: none;
+}
+
+
+</style>
+<!--
+Yellow  #FFFF00
+Orange  #FFD700
+Magenta #FF00FF
+Green   #008000
+Cyan    #00FFFF
+Blue    #0000FF
+Gray    #808080
+Black   #000000
+White   #FFFFFF
+-->
+<script>
+function myonload() {
+//  for( var itv of itvlist ) { console.log( itv ); }
+//  for( var view of viewset ) { console.log( view ); }
+/*
+  var views = document.querySelectorAll('#main object');
+  views.forEach(function(node) {
+    node.addEventListener("dblclick", function(e) {
+      alert(e.target.id + ":dblclick");
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }, false);
+  });
+*/
+  var main = document.getElementById("main");
+  main.addEventListener("click", function(e) {
+    document.getElementById("main").style.visibility = 'hidden';
+    document.getElementById("menu0").style.visibility = 'visible';
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }, false);
+  var menu0 = document.getElementById("menu0");
+  menu0.addEventListener("click", function(e) {
+    switch (e.target.id) {
+      case "menu0menu1":
+//        setClassDisplay("row2", 'hidden');
+//        setClassDisplay("col2", 'hidden');
+//        setClassDisplay("col3", 'hidden');
+        document.getElementById("menu1").style.visibility = 'visible';
+        document.getElementById("menu4").style.visibility = 'hidden';
+        document.getElementById("menu6").style.visibility = 'hidden';
+        break;
+      case "menu0menu4":
+//        setClassDisplay("row2", 'table-row');
+//        setClassDisplay("col2", 'table-cell');
+//        setClassDisplay("col3", 'hidden');
+        document.getElementById("menu1").style.visibility = 'hidden';
+        document.getElementById("menu4").style.visibility = 'visible';
+        document.getElementById("menu6").style.visibility = 'hidden';
+        break;
+      case "menu0menu6":
+//        setClassDisplay("row2", 'table-row');
+//        setClassDisplay("col2", 'table-cell');
+//        setClassDisplay("col3", 'table-cell');
+        document.getElementById("menu1").style.visibility = 'hidden';
+        document.getElementById("menu4").style.visibility = 'hidden';
+        document.getElementById("menu6").style.visibility = 'visible';
+        break;
+      case "menu0back":
+        document.getElementById("menu0").style.visibility = 'hidden';
+        document.getElementById("menu1").style.visibility = 'hidden';
+        document.getElementById("menu4").style.visibility = 'hidden';
+        document.getElementById("menu6").style.visibility = 'hidden';
+        document.getElementById("main").style.visibility = 'visible';
+        break;
+      default:
+        ;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }, false);
+  var menu1 = document.getElementById("menu1");
+  menu1.addEventListener("dblclick", function(e) {
+    document.getElementById("menu1").style.visibility = 'hidden';
+    document.getElementById("main").style.visibility = 'visible';
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }, false);
+  var menu4 = document.getElementById("menu4");
+  menu4.addEventListener("dblclick", function(e) {
+    document.getElementById("menu4").style.visibility = 'hidden';
+    document.getElementById("main").style.visibility = 'visible';
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }, false);
+  var menu6 = document.getElementById("menu6");
+  menu6.addEventListener("dblclick", function(e) {
+    document.getElementById("menu6").style.visibility = 'hidden';
+    document.getElementById("main").style.visibility = 'visible';
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }, false);
+}
+function setClassDisplay(className, display) {
+  c = document.getElementsByClassName(className);
+  for(var e of c) {
+    e.style.display = display;
+  }
+}
+</script>
+</head>
+<body onload="myonload();">
+<!--
+<table id="main">
+  <tr id="row1" class="row1">
+    <td id="cell1" class="col1">11
+      <object id="view1" data="./pascal01.swf" type="application/x-shockwave-flash">
+      <param name="movie", value="./pascal01.swf">
+      </object>
+    </td>
+    <td id="cell2" class="col2">12
+      <object id="view2" data="./pascal01.swf" type="application/x-shockwave-flash">
+      <param name="movie", value="./pascal01.swf">
+      </object>
+    </td>
+    <td id="cell3" class="col3">13
+      <object id="view3" data="./pascal01.swf" type="application/x-shockwave-flash">
+      <param name="movie", value="./pascal01.swf">
+      </object>
+    </td>
+  </tr>
+  <tr id="row2" class="row2">
+    <td id="cell4" class="col1">21
+      <object id="view4" data="./pascal01.swf" type="application/x-shockwave-flash">
+      <param name="movie", value="./pascal01.swf">
+      </object>
+    </td>
+    <td id="cell5" class="col2">22
+      <object id="view5" data="./pascal01.swf" type="application/x-shockwave-flash">
+      <param name="movie", value="./pascal01.swf">
+      </object>
+    </td>
+    <td id="cell6" class="col3">23
+      <object id="view6" data="./pascal01.swf" type="application/x-shockwave-flash">
+      <param name="movie", value="./pascal01.swf">
+      </object>
+    </td>
+  </tr>
+</table>
+-->
+<table id="main">
+  <tr id="row1" class="row1">
+    <td id="cell1" class="col1">11
+    </td>
+    <td id="cell2" class="col2">12
+    </td>
+    <td id="cell3" class="col3">13
+    </td>
+  </tr>
+  <tr id="row2" class="row2">
+    <td id="cell4" class="col1">21
+    </td>
+    <td id="cell5" class="col2">22
+    </td>
+    <td id="cell6" class="col3">23
+    </td>
+  </tr>
+</table>
+<table id="menu0" class="menu">
+  <tr>
+    <td id="menu0menu1">1画面選択へ</td>
+  </tr>
+  <tr>
+    <td id="menu0menu4">4画面選択へ</td>
+  </tr>
+  <tr>
+    <td id="menu0menu6">6画面選択へ</td>
+  </tr>
+  <tr>
+    <td id="menu0back">戻る</td>
+  </tr>
+</table>
+<table id="menu1" class="menu">
+  <tr>
+    <td>
+      <table class="subtable1">
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table id="menu4" class="menu">
+  <tr>
+    <td><table class="subtable4"><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+</table>
+<table id="menu6" class="menu">
+  <tr>
+    <td id="menu6sel01">6画面選択</td>
+  <tr>
+</table>
+<script>
+var displaySize = { width: 1366, height: 768 };
+
+var myDefaultInput = [ 1, 2, 3, 4 ];
+var myDefalt = {
+  password: "admin:jvc",
+  httpPort: 80,     // 1~65535
+  streamType: 1,    // 1:Unicast, 2:Multicast
+  framesize: 0,     // 0:VGAor640x360, 1:QVGAor32x180
+  bufferSize: 300,  // 300~1000[ms]
+  dispTitle: 1,     // 0:Hidden, 1:Show
+  textColorR: 255,
+  textColorG: 255,
+  textColorB: 255,
+};
+var itvlist = [
+  { addr: "192.168.255.101", input: 1, tag: "itv01", title: "#001" },
+  { addr: "192.168.255.101", input: 2, tag: "itv02", title: "#002" },
+  { addr: "192.168.255.101", input: 3, tag: "itv03", title: "#003" },
+  { addr: "192.168.255.101", input: 4, tag: "itv04", title: "#004" },
+
+  { addr: "192.168.255.102", input: 1, tag: "itv05", title: "#005" },
+  { addr: "192.168.255.102", input: 2, tag: "itv06", title: "#006" },
+  { addr: "192.168.255.102", input: 3, tag: "itv07", title: "#007" },
+  { addr: "192.168.255.102", input: 4, tag: "itv08", title: "#008" },
+
+  { addr: "192.168.255.103", input: 1, tag: "itv09", title: "#009" },
+  { addr: "192.168.255.103", input: 2, tag: "itv10", title: "#010" },
+  { addr: "192.168.255.103", input: 3, tag: "itv11", title: "#011" },
+  { addr: "192.168.255.103", input: 4, tag: "itv12", title: "#012" },
+
+  { addr: "192.168.255.104", input: 1, tag: "itv13", title: "#013" },
+  { addr: "192.168.255.104", input: 2, tag: "itv14", title: "#014" },
+  { addr: "192.168.255.104", input: 3, tag: "itv15", title: "#015" },
+  { addr: "192.168.255.104", input: 4, tag: "itv16", title: "#016" },
+
+  { addr: "192.168.255.105", input: 1, tag: "itv17", title: "#017" },
+  { addr: "192.168.255.105", input: 2, tag: "itv18", title: "#018" },
+  { addr: "192.168.255.105", input: 3, tag: "itv19", title: "#019" },
+  { addr: "192.168.255.105", input: 4, tag: "itv20", title: "#020" },
+
+  { addr: "192.168.255.106", input: 1, tag: "itv21", title: "#021" },
+  { addr: "192.168.255.106", input: 2, tag: "itv22", title: "#022" },
+  { addr: "192.168.255.106", input: 3, tag: "itv23", title: "#023" },
+  { addr: "192.168.255.106", input: 4, tag: "itv24", title: "#024" },
+
+  { addr: "192.168.255.107", input: 1, tag: "itv25", title: "#025" },
+  { addr: "192.168.255.107", input: 2, tag: "itv26", title: "#026" },
+  { addr: "192.168.255.107", input: 3, tag: "itv27", title: "#027" },
+  { addr: "192.168.255.107", input: 4, tag: "itv28", title: "#028" },
+
+  { addr: "192.168.255.108", input: 1, tag: "itv29", title: "#029" },
+  { addr: "192.168.255.108", input: 2, tag: "itv30", title: "#030" },
+  { addr: "192.168.255.108", input: 3, tag: "itv31", title: "#031" },
+  { addr: "192.168.255.108", input: 4, tag: "itv32", title: "#032" },
+
+  { addr: "192.168.255.109", input: 1, tag: "itv33", title: "#033" },
+  { addr: "192.168.255.109", input: 2, tag: "itv34", title: "#034" },
+  { addr: "192.168.255.109", input: 3, tag: "itv35", title: "#035" },
+  { addr: "192.168.255.109", input: 4, tag: "itv36", title: "#036" },
+
+  { addr: "192.168.255.110", input: 1, tag: "itv37", title: "#037" },
+  { addr: "192.168.255.110", input: 2, tag: "itv38", title: "#038" },
+  { addr: "192.168.255.110", input: 3, tag: "itv39", title: "#039" },
+  { addr: "192.168.255.110", input: 4, tag: "itv40", title: "#040" },
+
+  { addr: "192.168.255.111", input: 1, tag: "itv41", title: "#041" },
+  { addr: "192.168.255.111", input: 2, tag: "itv42", title: "#042" },
+  { addr: "192.168.255.111", input: 3, tag: "itv43", title: "#043" },
+  { addr: "192.168.255.111", input: 4, tag: "itv44", title: "#044" },
+
+  { addr: "192.168.255.112", input: 1, tag: "itv45", title: "#045" },
+  { addr: "192.168.255.112", input: 2, tag: "itv46", title: "#046" },
+  { addr: "192.168.255.112", input: 3, tag: "itv47", title: "#047" },
+  { addr: "192.168.255.112", input: 4, tag: "itv48", title: "#048" },
+
+  { addr: "192.168.255.113", input: 1, tag: "itv49", title: "#049" },
+  { addr: "192.168.255.113", input: 2, tag: "itv50", title: "#050" },
+  { addr: "192.168.255.113", input: 3, tag: "itv51", title: "#051" },
+  { addr: "192.168.255.113", input: 4, tag: "itv52", title: "#052" },
+
+  { addr: "192.168.255.114", input: 1, tag: "itv53", title: "#053" },
+  { addr: "192.168.255.114", input: 2, tag: "itv54", title: "#054" },
+  { addr: "192.168.255.114", input: 3, tag: "itv55", title: "#055" },
+  { addr: "192.168.255.114", input: 4, tag: "itv56", title: "#056" },
+
+  { addr: "192.168.255.115", input: 1, tag: "itv57", title: "#057" },
+  { addr: "192.168.255.115", input: 2, tag: "itv58", title: "#058" },
+  { addr: "192.168.255.115", input: 3, tag: "itv59", title: "#059" },
+  { addr: "192.168.255.115", input: 4, tag: "itv60", title: "#060" },
+
+  { addr: "192.168.255.116", input: 1, tag: "itv61", title: "#061" },
+  { addr: "192.168.255.116", input: 2, tag: "itv62", title: "#062" },
+  { addr: "192.168.255.116", input: 3, tag: "itv63", title: "#063" },
+  { addr: "192.168.255.116", input: 4, tag: "itv64", title: "#064" },
+];
+var viewset = [
+  [
+    ["itv01", "itv02", "itv03", "itv04"],
+    ["itv05", "itv06", "itv07", "itv08"],
+    ["itv09", "itv10", "itv11", "itv12"],
+    ["itv13", "itv14", "itv15", "itv16"],
+    ["itv17", "itv18", "itv19", "itv20"],
+    ["itv21", "itv22", "itv23", "itv24"],
+    ["itv25", "itv26", "itv27", "itv28"],
+    ["itv29", "itv30", "itv31", "itv32"],
+    ["itv33", "itv34", "itv35", "itv36"],
+    ["itv37", "itv38", "itv39", "itv40"],
+    ["itv41", "itv42", "itv43", "itv44"],
+    ["itv45", "itv46", "itv47", "itv48"],
+    ["itv49", "itv50", "itv51", "itv52"],
+    ["itv53", "itv54", "itv55", "itv56"],
+    ["itv57", "itv58", "itv59", "itv60"],
+    ["itv61", "itv62", "itv63", "itv64"],
+  ],
+  [
+    ["itv01", "itv02", "itv03", "itv04", "itv05", "itv06"],
+    ["itv07", "itv08", "itv09", "itv10", "itv11", "itv12"],
+    ["itv13", "itv14", "itv15", "itv16", "itv17", "itv18"],
+    ["itv19", "itv20", "itv21", "itv22", "itv23", "itv24"],
+    ["itv25", "itv26", "itv27", "itv28", "itv29", "itv30"],
+    ["itv31", "itv32", "itv33", "itv34", "itv35", "itv36"],
+    ["itv37", "itv38", "itv39", "itv40", "itv41", "itv42"],
+    ["itv43", "itv44", "itv45", "itv46", "itv47", "itv48"],
+    ["itv49", "itv50", "itv51", "itv52", "itv53", "itv54"],
+    ["itv55", "itv56", "itv57", "itv58", "itv59", "itv60"],
+    ["itv61", "itv62", "itv63", "itv64", "",      "",    ],
+  ],
+];
+</script>
+</body>
+</html>
