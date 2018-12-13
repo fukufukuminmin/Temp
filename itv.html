@@ -163,25 +163,16 @@ function myonload() {
   menu0.addEventListener("click", function(e) {
     switch (e.target.id) {
       case "menu0menu1":
-//        setClassDisplay("row2", 'hidden');
-//        setClassDisplay("col2", 'hidden');
-//        setClassDisplay("col3", 'hidden');
         document.getElementById("menu1").style.visibility = 'visible';
         document.getElementById("menu4").style.visibility = 'hidden';
         document.getElementById("menu6").style.visibility = 'hidden';
         break;
       case "menu0menu4":
-//        setClassDisplay("row2", 'table-row');
-//        setClassDisplay("col2", 'table-cell');
-//        setClassDisplay("col3", 'hidden');
         document.getElementById("menu1").style.visibility = 'hidden';
         document.getElementById("menu4").style.visibility = 'visible';
         document.getElementById("menu6").style.visibility = 'hidden';
         break;
       case "menu0menu6":
-//        setClassDisplay("row2", 'table-row');
-//        setClassDisplay("col2", 'table-cell');
-//        setClassDisplay("col3", 'table-cell');
         document.getElementById("menu1").style.visibility = 'hidden';
         document.getElementById("menu4").style.visibility = 'hidden';
         document.getElementById("menu6").style.visibility = 'visible';
@@ -228,14 +219,6 @@ function myonload() {
     return false;
   }, false);
 }
-/*
-function setClassDisplay(className, display) {
-  c = document.getElementsByClassName(className);
-  for(var e of c) {
-    e.style.display = display;
-  }
-}
-*/
 </script>
 </head>
 <body onload="myonload();">
@@ -483,35 +466,69 @@ var itvlist = [
 ];
 var viewset = [
   [
+    ["itv01", "itv02", "itv03", "itv04", "itv05", "itv06", "itv07", "itv08"],
+    ["itv09", "itv10", "itv11", "itv12", "itv13", "itv14", "itv15", "itv16"],
+    ["itv17", "itv18", "itv19", "itv20", "itv21", "itv22", "itv23", "itv24"],
+    ["itv25", "itv26", "itv27", "itv28", "itv29", "itv30", "itv31", "itv32"],
+    ["itv33", "itv34", "itv35", "itv36", "itv37", "itv38", "itv39", "itv40"],
+    ["itv41", "itv42", "itv43", "itv44", "itv45", "itv46", "itv47", "itv48"],
+    ["itv49", "itv50", "itv51", "itv52", "itv53", "itv54", "itv55", "itv56"],
+    ["itv57", "itv58", "itv59", "itv60", "itv61", "itv62", "itv63", "itv64"],
+    [""     , ""     , ""     , ""     , ""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     , ""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     , ""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     , ""     , ""     , ""     , ""     ],
+  ],
+
+  [
     ["itv01", "itv02", "itv03", "itv04"],
     ["itv05", "itv06", "itv07", "itv08"],
     ["itv09", "itv10", "itv11", "itv12"],
     ["itv13", "itv14", "itv15", "itv16"],
     ["itv17", "itv18", "itv19", "itv20"],
     ["itv21", "itv22", "itv23", "itv24"],
+
     ["itv25", "itv26", "itv27", "itv28"],
     ["itv29", "itv30", "itv31", "itv32"],
     ["itv33", "itv34", "itv35", "itv36"],
     ["itv37", "itv38", "itv39", "itv40"],
     ["itv41", "itv42", "itv43", "itv44"],
     ["itv45", "itv46", "itv47", "itv48"],
+
     ["itv49", "itv50", "itv51", "itv52"],
     ["itv53", "itv54", "itv55", "itv56"],
     ["itv57", "itv58", "itv59", "itv60"],
     ["itv61", "itv62", "itv63", "itv64"],
+    [""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     ],
+
+    [""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     ],
   ],
   [
     ["itv01", "itv02", "itv03", "itv04", "itv05", "itv06"],
     ["itv07", "itv08", "itv09", "itv10", "itv11", "itv12"],
     ["itv13", "itv14", "itv15", "itv16", "itv17", "itv18"],
     ["itv19", "itv20", "itv21", "itv22", "itv23", "itv24"],
+
     ["itv25", "itv26", "itv27", "itv28", "itv29", "itv30"],
     ["itv31", "itv32", "itv33", "itv34", "itv35", "itv36"],
     ["itv37", "itv38", "itv39", "itv40", "itv41", "itv42"],
     ["itv43", "itv44", "itv45", "itv46", "itv47", "itv48"],
+
     ["itv49", "itv50", "itv51", "itv52", "itv53", "itv54"],
     ["itv55", "itv56", "itv57", "itv58", "itv59", "itv60"],
     ["itv61", "itv62", "itv63", "itv64", "",      "",    ],
+    [""     , ""     , ""     , ""     , ""     , ""     ],
+
+    [""     , ""     , ""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     , ""     , ""     ],
+    [""     , ""     , ""     , ""     , ""     , ""     ],
   ],
 ];
 </script>
