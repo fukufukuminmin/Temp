@@ -10,7 +10,7 @@
   --mycols: 3;
   --myborder: 4px;
   --mytitlfontesize: 32px;
-  --mymenu0fontsize: 12px;
+  --mymenusfontsize: 12px;
 }
 html, body {
   height: 100%;
@@ -30,7 +30,7 @@ html, body {
   width: 100%;
   height: 100%;
 }
-#menu0 {
+#menus {
   position: fixed;
   top: 0px;
   left: 0%;
@@ -41,7 +41,7 @@ html, body {
   width: 10%;
   height: 100%;
 }
-#menu1, #menu4, #menu6 {
+#menu0, #menu1, #menu2 {
   position: fixed;
   top: 0px;
   left: 10%;
@@ -52,7 +52,7 @@ html, body {
   width: 90%;
   height: 100%;
 }
-#menu1 table, #menu4 table, #menu6 table {
+#menu0 table, #menu1 table, #menu2 table {
   border-collapse: collapse;
   empty-cells: show;
   table-layout: fixed;
@@ -76,21 +76,21 @@ html, body {
 #main {
   visibility: visible;
 }
-#menu0, #menu1, #menu4, #menu6 {
+#menus, #menu0, #menu1, #menu2 {
   visibility: hidden;
 }
-#menu4>tbody>tr>td table td, #menu6>tbody>tr>td table td{
+#menu1>tbody>tr>td table td, #menu2>tbody>tr>td table td{
   background: none;
 }
-#main td:hover, table#menu0 td:hover, #menu1 td:hover, #menu4 td:hover, #menu6 td:hover {
+#main td:hover, table#menus td:hover, #menu0 td:hover, #menu1 td:hover, #menu2 td:hover {
   background: gray;
 }
 
 /*メニューアイテム共通*/
+#menus td, #menus th,
 #menu0 td, #menu0 th,
 #menu1 td, #menu1 th,
-#menu4 td, #menu4 th,
-#menu6 td, #menu6 th {
+#menu2 td, #menu2 th {
   margin: 0px;
   padding: 0px;
   border: solid 4px #FFFFFF;
@@ -98,25 +98,15 @@ html, body {
   background: black;
   color: white;
   font-family: "MS Gothic";
-/*
-  font-size: 32px;
-  font-size: var(--myfontsize);
-*/
   text-align: center;
   vertical-align: center;
   box-sizing: border-box;
 }
-#menu0 td {
+#menus td {
   font-size: 24px;
-  font-size: var(--mymenu0fontsize);
+  font-size: var(--mymenusfontsize);
 }
 
-#grid11 { background: #FFFF00; }
-#grid12 { background: #FF00FF; }
-#grid13 { background: #008000; }
-#grid21 { background: #00FFFF; }
-#grid22 { background: #0000FF; }
-#grid23 { background: #808080; }
 #main object {
   width: 320;
   height: 240;
@@ -137,9 +127,73 @@ Black   #000000
 White   #FFFFFF
 -->
 <script>
+
+var menus;
+var menu0;
+var menu1;
+var menu2;
+
+function getItv(tag) {
+  if (tag == "") {
+    return null;
+  }
+  for(var i = 0; i < itvlist.length; i++ ) {
+    if ( itvlist[i].tag == tag ) {
+      return itvlist[i];
+    }
+  }
+  return null;
+}
+
+function setupMenu() {
+  var menu;
+
+  menu = document.querySelectorAll("#menu0");
+  for (var i = 0; i < menu.length; i++) {
+    var n = 0;
+    for (var r = 0; r < 8; r++) {
+      for (var c = 0; c < 12; c++) {
+        var view = viewsets[0][0][n];
+        var itv = getItv(view);
+        menu[0].rows[r].cells[c].innerHTML = itv == null ? '&nbsp;<br>&nbsp;' : itv.tag + '<br>' + itv.title;
+        n++;
+      }
+    }
+  }
+
+  menu = document.querySelectorAll("#menu1 table");
+  for (var i = 0; i < menu.length; i++) {
+    var n = 0;
+    for (var r = 0; r < 2; r++) {
+      for (var c = 0; c < 2; c++) {
+        var view = viewsets[1][i][n];
+        var itv = getItv(view);
+        menu[i].rows[r].cells[c].innerHTML = itv == null ? '&nbsp;<br>&nbsp;' : itv.tag + '<br>' + itv.title;
+        n++;
+      }
+    }
+  }
+
+  menu = document.querySelectorAll("#menu2 table");
+  for (var i = 0; i < menu.length; i++) {
+    var n = 0;
+    for (var r = 0; r < 2; r++) {
+      for (var c = 0; c < 3; c++) {
+        var view = viewsets[2][i][n];
+        var itv = getItv(view);
+        menu[i].rows[r].cells[c].innerHTML = itv == null ? '&nbsp;<br>&nbsp;' : itv.tag + '<br>' + itv.title;
+        n++;
+      }
+    }
+  }
+}
+
 function myonload() {
 //  for( var itv of itvlist ) { console.log( itv ); }
-//  for( var view of viewset ) { console.log( view ); }
+//  for( var view of viewsets ) { console.log( view ); }
+
+  setupMenu();
+
 /*
   var views = document.querySelectorAll('#main object');
   views.forEach(function(node) {
@@ -154,34 +208,34 @@ function myonload() {
   var main = document.getElementById("main");
   main.addEventListener("click", function(e) {
     document.getElementById("main").style.visibility = 'hidden';
-    document.getElementById("menu0").style.visibility = 'visible';
+    document.getElementById("menus").style.visibility = 'visible';
     e.preventDefault();
     e.stopPropagation();
     return false;
   }, false);
-  var menu0 = document.getElementById("menu0");
-  menu0.addEventListener("click", function(e) {
+  var menus = document.getElementById("menus");
+  menus.addEventListener("click", function(e) {
     switch (e.target.id) {
-      case "menu0menu1":
+      case "menusmenu0":
+        document.getElementById("menu0").style.visibility = 'visible';
+        document.getElementById("menu1").style.visibility = 'hidden';
+        document.getElementById("menu2").style.visibility = 'hidden';
+        break;
+      case "menusmenu1":
+        document.getElementById("menu0").style.visibility = 'hidden';
         document.getElementById("menu1").style.visibility = 'visible';
-        document.getElementById("menu4").style.visibility = 'hidden';
-        document.getElementById("menu6").style.visibility = 'hidden';
+        document.getElementById("menu2").style.visibility = 'hidden';
         break;
-      case "menu0menu4":
-        document.getElementById("menu1").style.visibility = 'hidden';
-        document.getElementById("menu4").style.visibility = 'visible';
-        document.getElementById("menu6").style.visibility = 'hidden';
-        break;
-      case "menu0menu6":
-        document.getElementById("menu1").style.visibility = 'hidden';
-        document.getElementById("menu4").style.visibility = 'hidden';
-        document.getElementById("menu6").style.visibility = 'visible';
-        break;
-      case "menu0back":
+      case "menusmenu2":
         document.getElementById("menu0").style.visibility = 'hidden';
         document.getElementById("menu1").style.visibility = 'hidden';
-        document.getElementById("menu4").style.visibility = 'hidden';
-        document.getElementById("menu6").style.visibility = 'hidden';
+        document.getElementById("menu2").style.visibility = 'visible';
+        break;
+      case "menusback":
+        document.getElementById("menus").style.visibility = 'hidden';
+        document.getElementById("menu0").style.visibility = 'hidden';
+        document.getElementById("menu1").style.visibility = 'hidden';
+        document.getElementById("menu2").style.visibility = 'hidden';
         document.getElementById("main").style.visibility = 'visible';
         break;
       default:
@@ -191,76 +245,90 @@ function myonload() {
     e.stopPropagation();
     return false;
   }, false);
-  var menu1 = document.getElementById("menu1");
-  menu1.addEventListener("dblclick", function(e) {
-    document.getElementById("menu0").style.visibility = 'hidden';
-    document.getElementById("menu1").style.visibility = 'hidden';
-    document.getElementById("main").style.visibility = 'visible';
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }, false);
-  var menu4 = document.getElementById("menu4");
-  menu4.addEventListener("dblclick", function(e) {
-    document.getElementById("menu0").style.visibility = 'hidden';
-    document.getElementById("menu4").style.visibility = 'hidden';
-    document.getElementById("main").style.visibility = 'visible';
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }, false);
-  var menu6 = document.getElementById("menu6");
-  menu6.addEventListener("dblclick", function(e) {
-    document.getElementById("menu0").style.visibility = 'hidden';
-    document.getElementById("menu6").style.visibility = 'hidden';
-    document.getElementById("main").style.visibility = 'visible';
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-  }, false);
+  var elems;
+  elems = document.querySelectorAll('#menu0>tbody>tr>td');
+  for (var i = 0; i < elems.length; i++ ) {
+    elems[i].addEventListener("click", function(e) {
+      alert( e.currentTarget.id );
+      document.getElementById("menus").style.visibility = 'hidden';
+      document.getElementById("menu0").style.visibility = 'hidden';
+      document.getElementById("menu1").style.visibility = 'hidden';
+      document.getElementById("menu2").style.visibility = 'hidden';
+      document.getElementById("main").style.visibility = 'visible';
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }, false);
+  }
+  elems = document.querySelectorAll('#menu1>tbody>tr>td');
+  for (var i = 0; i < elems.length; i++ ) {
+    elems[i].addEventListener("click", function(e) {
+      alert( e.currentTarget.id );
+      document.getElementById("menus").style.visibility = 'hidden';
+      document.getElementById("menu0").style.visibility = 'hidden';
+      document.getElementById("menu1").style.visibility = 'hidden';
+      document.getElementById("menu2").style.visibility = 'hidden';
+      document.getElementById("main").style.visibility = 'visible';
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }, false);
+  }
+  elems = document.querySelectorAll('#menu2>tbody>tr>td');
+  for (var i = 0; i < elems.length; i++ ) {
+    elems[i].addEventListener("click", function(e) {
+      alert( e.currentTarget.id );
+      document.getElementById("menus").style.visibility = 'hidden';
+      document.getElementById("menu0").style.visibility = 'hidden';
+      document.getElementById("menu1").style.visibility = 'hidden';
+      document.getElementById("menu2").style.visibility = 'hidden';
+      document.getElementById("main").style.visibility = 'visible';
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }, false);
+  }
 }
 </script>
 </head>
 <body onload="myonload();">
-<!--
 <table id="main">
   <tr id="row1" class="row1">
     <td id="cell1" class="col1">11
       <object id="view1" data="./pascal01.swf" type="application/x-shockwave-flash">
-      <param name="movie", value="./pascal01.swf">
+      <param name="movie" value="./pascal01.swf">
+      <param name="wmode" value="transparent">
       </object>
     </td>
     <td id="cell2" class="col2">12
       <object id="view2" data="./pascal01.swf" type="application/x-shockwave-flash">
-      <param name="movie", value="./pascal01.swf">
+      <param name="movie" value="./pascal01.swf">
       </object>
     </td>
     <td id="cell3" class="col3">13
       <object id="view3" data="./pascal01.swf" type="application/x-shockwave-flash">
-      <param name="movie", value="./pascal01.swf">
+      <param name="movie" value="./pascal01.swf">
       </object>
     </td>
   </tr>
   <tr id="row2" class="row2">
     <td id="cell4" class="col1">21
       <object id="view4" data="./pascal01.swf" type="application/x-shockwave-flash">
-      <param name="movie", value="./pascal01.swf">
+      <param name="movie" value="./pascal01.swf">
       </object>
     </td>
     <td id="cell5" class="col2">22
       <object id="view5" data="./pascal01.swf" type="application/x-shockwave-flash">
-      <param name="movie", value="./pascal01.swf">
-      </object>
+      <param name="movie" value="./pascal01.swf">
+    </object>
     </td>
     <td id="cell6" class="col3">23
       <object id="view6" data="./pascal01.swf" type="application/x-shockwave-flash">
-      <param name="movie", value="./pascal01.swf">
+      <param name="movie" value="./pascal01.swf">
       </object>
     </td>
   </tr>
-</table>
--->
-<table id="main">
+<!--
   <tr id="row1" class="row1">
     <td id="cell1" class="col1">11
     </td>
@@ -277,95 +345,122 @@ function myonload() {
     <td id="cell6" class="col3">23
     </td>
   </tr>
+-->
+</table>
+<table id="menus" class="menu">
+  <tr>
+    <td id="menusmenu0">1画面選択へ</td>
+  </tr>
+  <tr>
+    <td id="menusmenu1">4画面選択へ</td>
+  </tr>
+  <tr>
+    <td id="menusmenu2">6画面選択へ</td>
+  </tr>
+  <tr>
+    <td id="menusback">戻る</td>
+  </tr>
 </table>
 <table id="menu0" class="menu">
   <tr>
-    <td id="menu0menu1">1画面選択へ</td>
+    <td id="001"></td><td id="002"></td><td id="003"></td><td id="004"></td>
+    <td id="005"></td><td id="006"></td><td id="007"></td><td id="008"></td>
+    <td id="009"></td><td id="010"></td><td id="011"></td><td id="012"></td>
   </tr>
   <tr>
-    <td id="menu0menu4">4画面選択へ</td>
+    <td id="013"></td><td id="014"></td><td id="015"></td><td id="016"></td>
+    <td id="017"></td><td id="018"></td><td id="019"></td><td id="020"></td>
+    <td id="021"></td><td id="022"></td><td id="023"></td><td id="024"></td>
   </tr>
   <tr>
-    <td id="menu0menu6">6画面選択へ</td>
+    <td id="025"></td><td id="026"></td><td id="027"></td><td id="028"></td>
+    <td id="029"></td><td id="030"></td><td id="031"></td><td id="032"></td>
+    <td id="033"></td><td id="034"></td><td id="035"></td><td id="036"></td>
   </tr>
   <tr>
-    <td id="menu0back">戻る</td>
+    <td id="037"></td><td id="038"></td><td id="039"></td><td id="040"></td>
+    <td id="041"></td><td id="042"></td><td id="043"></td><td id="044"></td>
+    <td id="045"></td><td id="046"></td><td id="047"></td><td id="048"></td>
+  </tr>
+  <tr>
+    <td id="049"></td><td id="050"></td><td id="051"></td><td id="052"></td>
+    <td id="053"></td><td id="054"></td><td id="055"></td><td id="056"></td>
+    <td id="057"></td><td id="058"></td><td id="059"></td><td id="060"></td>
+  </tr>
+  <tr>
+    <td id="061"></td><td id="062"></td><td id="063"></td><td id="064"></td>
+    <td id="065"></td><td id="066"></td><td id="067"></td><td id="068"></td>
+    <td id="069"></td><td id="070"></td><td id="071"></td><td id="072"></td>
+  </tr>
+  <tr>
+    <td id="073"></td><td id="074"></td><td id="075"></td><td id="076"></td>
+    <td id="077"></td><td id="078"></td><td id="079"></td><td id="080"></td>
+    <td id="081"></td><td id="082"></td><td id="083"></td><td id="084"></td>
+  </tr>
+  <tr>
+    <td id="085"></td><td id="086"></td><td id="087"></td><td id="088"></td>
+    <td id="089"></td><td id="090"></td><td id="091"></td><td id="092"></td>
+    <td id="093"></td><td id="094"></td><td id="095"></td><td id="096"></td>
   </tr>
 </table>
 <table id="menu1" class="menu">
   <tr>
-    <td>
-      <table>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      </table>
-    </td>
+    <td id="101"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="102"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="103"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="104"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="105"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="106"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td id="107"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="108"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="109"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="110"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="111"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="112"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td id="113"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="114"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="115"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="116"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="117"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="118"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td id="119"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="120"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="121"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="122"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="123"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="124"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
   </tr>
 </table>
-<table id="menu4" class="menu">
+<table id="menu2" class="menu">
   <tr>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="201"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="202"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="203"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="204"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
   </tr>
   <tr>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="205"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="206"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="207"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="208"><table ><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
   </tr>
   <tr>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="209"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="210"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="211"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="212"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
   </tr>
   <tr>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
-  </tr>
-</table>
-<table id="menu6" class="menu">
-  <tr>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-  </tr>
-  <tr>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-  </tr>
-  <tr>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-  </tr>
-  <tr>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
-    <td><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="213"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="214"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="215"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="216"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
   </tr>
 </table>
 <script>
@@ -464,20 +559,33 @@ var itvlist = [
   { addr: "192.168.255.116", input: 3, tag: "itv63", title: "#063" },
   { addr: "192.168.255.116", input: 4, tag: "itv64", title: "#064" },
 ];
-var viewset = [
+var viewsets = [
   [
-    ["itv01", "itv02", "itv03", "itv04", "itv05", "itv06", "itv07", "itv08"],
-    ["itv09", "itv10", "itv11", "itv12", "itv13", "itv14", "itv15", "itv16"],
-    ["itv17", "itv18", "itv19", "itv20", "itv21", "itv22", "itv23", "itv24"],
-    ["itv25", "itv26", "itv27", "itv28", "itv29", "itv30", "itv31", "itv32"],
-    ["itv33", "itv34", "itv35", "itv36", "itv37", "itv38", "itv39", "itv40"],
-    ["itv41", "itv42", "itv43", "itv44", "itv45", "itv46", "itv47", "itv48"],
-    ["itv49", "itv50", "itv51", "itv52", "itv53", "itv54", "itv55", "itv56"],
-    ["itv57", "itv58", "itv59", "itv60", "itv61", "itv62", "itv63", "itv64"],
-    [""     , ""     , ""     , ""     , ""     , ""     , ""     , ""     ],
-    [""     , ""     , ""     , ""     , ""     , ""     , ""     , ""     ],
-    [""     , ""     , ""     , ""     , ""     , ""     , ""     , ""     ],
-    [""     , ""     , ""     , ""     , ""     , ""     , ""     , ""     ],
+    [
+    "itv01", "itv02", "itv03", "itv04", "itv05", "itv06",
+    "itv07", "itv08", "itv09", "itv10", "itv11", "itv12",
+
+    "itv13", "itv14", "itv15", "itv16", "itv17", "itv18",
+    "itv19", "itv20", "itv21", "itv22", "itv23", "itv24",
+
+    "itv25", "itv26", "itv27", "itv28", "itv29", "itv30",
+    "itv31", "itv32", "itv33", "itv34", "itv35", "itv36",
+
+    "itv37", "itv38", "itv39", "itv40", "itv41", "itv42",
+    "itv43", "itv44", "itv45", "itv46", "itv47", "itv48",
+
+    "itv49", "itv50", "itv51", "itv52", "itv53", "itv54",
+    "itv55", "itv56", "itv57", "itv58", "itv59", "itv60",
+
+    "itv61", "itv62", "itv63", "itv64", ""     , ""     ,
+    ""     , ""     , ""     , ""     , ""     , ""     ,
+
+    ""     , ""     , ""     , ""     , ""     , ""     ,
+    ""     , ""     , ""     , ""     , ""     , ""     ,
+
+    ""     , ""     , ""     , ""     , ""     , ""     ,
+    ""     , ""     , ""     , ""     , ""     , ""     ,
+    ],
   ],
 
   [
@@ -522,7 +630,7 @@ var viewset = [
 
     ["itv49", "itv50", "itv51", "itv52", "itv53", "itv54"],
     ["itv55", "itv56", "itv57", "itv58", "itv59", "itv60"],
-    ["itv61", "itv62", "itv63", "itv64", "",      "",    ],
+    ["itv61", "itv62", "itv63", "itv64", ""     , ""     ],
     [""     , ""     , ""     , ""     , ""     , ""     ],
 
     [""     , ""     , ""     , ""     , ""     , ""     ],
