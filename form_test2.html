@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<script>
+function sentRequest(addr, tag, act, port) {
+var xhr = new XMLHttpRequest();
+xhr.open("GET", addr + "?tag=" + tag + "&act=" + act, true);
+xhr.send(null);
+}
+</script>
+</head>
+<body>
+<form>
+<button type="button" id="up"    onclick="sentRequest('http://127.0.0.1:8080/', 'itv01', 'up')"   >上</button>
+<button type="button" id="down"  onclick="sentRequest('http://127.0.0.1:8080/', 'itv01', 'down')" >下</button>
+<button type="button" id="left"  onclick="sentRequest('http://127.0.0.1:8080/', 'itv01', 'left')" >左</button>
+<button type="button" id="right" onclick="sentRequest('http://127.0.0.1:8080/', 'itv01', 'right')">右</button>
+<button type="button" id="tele"  onclick="sentRequest('http://127.0.0.1:8080/', 'itv01', 'tele')" >遠</button>
+<button type="button" id="wide"  onclick="sentRequest('http://127.0.0.1:8080/', 'itv01', 'wide')" >近</button>
+</form>
+</body>
+</html>
