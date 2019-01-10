@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<script>
+function sentRequest(tag, act) {
+document.myform.action = 'http://127.0.0.1:8080/';
+document.myform.tag.value = tag;
+document.myform.act.value = act;
+document.myform.submit();
+document.myform.reset();
+}
+
+function loaded() {
+  console.log( "loaded" );
+/*
+  document.myform.addEventListener("click", function test(ev) {
+  console.log( "target:" + ev.target.id + " currentTarget:" + ev.currentTarget.id );
+  });
+*/
+}
+function test(ev) {
+ console.log( "target:" + ev.target.id + " currentTarget:" + ev.currentTarget.id );
+}
+</script>
+</head>
+<body onload="console.log('loaded');">
+<form name="myform" target="dummy" method="GET" visible="hidden">
+<input type="hidden" name="tag" value="">
+<input type="hidden" name="act" value="">
+</form>
+<form>
+<button id="up"    onclick="sentRequest('itv01', 'up')"   >上</button>
+<button id="down"  onclick="sentRequest('itv01', 'down')" >下</button>
+<button id="left"  onclick="sentRequest('itv01', 'left')" >左</button>
+<button id="right" onclick="sentRequest('itv01', 'right')">右</button>
+<button id="tele"  onclick="sentRequest('itv01', 'tele')" >遠</button>
+<button id="wide"  onclick="sentRequest('itv01', 'wide')" >近</button>
+</form>
+<!--
+<form name="myform" target="dummy" method="GET" action="http://127.0.0.1:8080/">
+<input type="hidden" name="tag" value="itv01">
+<button id="up"   >上</button>
+<button id="down" >下</button>
+<button id="left" >左</button>
+<button id="right">右</button>
+<button id="tele" >遠</button>
+<button id="wide" >近</button>
+</form>
+-->
+<!--
+<form name="myform" target="dummy" method="GET" action="http://127.0.0.1:8080/">
+<input type="hidden" name="tag"   value="itv01">
+<input type="submit" name="up"    value="up">
+<input type="submit" name="down"  value="down">
+<input type="submit" name="left"  value="left">
+<input type="submit" name="right" value="right">
+<input type="submit" name="tele"  value="tele">
+<input type="submit" name="wide"  value="far">
+</form>
+-->
+<!--<iframe name="dummy" style="display:none;"></iframe>-->
+
+<iframe name="dummy"></iframe>
+</body>
+</html>
