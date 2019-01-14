@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<script>
+
+var ptzs =
+{
+  "itv33" : {
+    "url"  : "http://127.0.0.1:8080/",
+    "acts" : {
+      "up"   : 26,
+      "down" : 19,
+      "left" : 13,
+      "right":  6,
+      "tele" :  5,
+      "wide" : 11
+    }
+  },
+  "dummy" : {
+    "url"  : "http://127.0.0.1:8080/",
+    "acts" : {
+      "up"   : 99,
+      "down" : 98,
+      "left" : 97,
+      "right": 96,
+      "tele" : 95,
+      "wide" : 94
+    }
+  }
+}
+
+function configServer() {
+  for( var tag in ptzs ) {
+    for( var act in ptzs[tag].acts ) {
+      var str = ptzs[tag].url; + "config?tag=" + tag + "&act=" + act + "&port=" + ptzs[tag].acts[act];
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", str, true);
+      xhr.send(null);
+    }
+  }
+}
+
+function sendRequest(tag, act) {
+var str = ptzs[tag].url + "?tag=" + tag + "&act=" + act + "&port=" + ptzs[tag].acts[act];
+var xhr = new XMLHttpRequest();
+xhr.open("GET", str, true);
+xhr.send(null);
+}
+
+var id = "";
+function myevent(ev) {
+var m;
+var tgt = ev.currentTarget;
+  if( ev.button == 0 && id == "" && ev.type == "mousedown") {
+    var tmp = tgt.id;
+    if ( /\d\d(up|down|left|right|tele|wide)/.test(tmp) ) {
+      id = tmp.substr(2)
+      sendRequest(tgt.form.id, id);
+    }
+  } else if( ev.button != 0 || ev.type == "mouseout" || ev.type == "mouseup" ) {
+    id = "";
+    return;
+  }
+  var s = setInterval(function() {
+    if( id == "" ) {
+      clearInterval(s);
+      return;
+    }
+    sendRequest(tgt.form.id, id);
+  }, 150);
+}
+
+function loaded() {
+  var tags = ["itv33", "itv99"];
+  var ids =  ["up", "down", "left", "right", "tele", "wide"];
+  var evs =  ["mousedown", "mouseup", "mouseout"];
+  for( var i = 0; i < tags.length; i++ ) {
+    for( var j = 0; j < ids.length; j++ ) {
+      var elem = document.getElementById(("0"+i).slice(-2) + ids[j]);
+      for( var k = 0; k < evs.length; k++ ) {
+        elem.addEventListener(evs[k], myevent);
+      }
+    }
+  }
+}
+</script>
+</head>
+<body onload="loaded()">
+<form id="itv33">
+  <button type="button" id="00up"   >上</button>
+  <button type="button" id="00down" >下</button><br>
+  <button type="button" id="00left" >左</button>
+  <button type="button" id="00right">右</button><br>
+  <button type="button" id="00tele" >近</button>
+  <button type="button" id="00wide" >遠</button><br>
+</form>
+<br>
+<form id="dummy">
+  <button type="button" id="01up"   >上</button>
+  <button type="button" id="01down" >下</button><br>
+  <button type="button" id="01left" >左</button>
+  <button type="button" id="01right">右</button><br>
+  <button type="button" id="01tele" >近</button>
+  <button type="button" id="01wide" >遠</button><br>
+</form>
+</body>
+</html>
