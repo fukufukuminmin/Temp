@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title></title>
+<style>
+:root {
+  --myrows2: 2:
+  --mycols2: 3;
+  --myborder: 4px;
+  --mytitlfontesize: 32px;
+  --mymenusfontsize: 24px;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  background: black;
+  color: white;
+}
+#view0, #view1, #view2, #view3 {
+  position: fixed;
+  top: 0;
+  left: 150px;
+  width: 1216px;
+  height: 768px;
+  padding: 0;
+  border: 0;
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
+  background-color: black;
+  visibility: hidden;
+}
+#view0 td, #view1 td, #view2 td, #view3 td {
+  margin: 0;
+  padding: 0;
+  border: solid 4px #FFFFFF;
+  border: solid var(--myborder) #FFFFFF;
+  color: white;
+/*
+  font-family: "MS Gothic";
+  font-size: 32px;
+  font-size: var(--myfontsize);
+  vertical-align: middle;
+  text-align: center;
+  user-select: none;
+*/
+  box-sizing: content-box;
+  background-clip: content-box;
+  position: relative;
+}
+/*
+#view0 td { height: 760px; }
+#view1 td { height: 378px; }
+#view2 td { height: 378px; }
+#view3 td { height: 760px; }
+#view0 object { height: 750px; }
+#view1 object { height: 375px; }
+#view2 object { height: 330px; }
+#view3 object { height: 600px; }
+*/
+
+#view0 object, #view1 object, #view2 object {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  pointer-events: none;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  z-index: -1;
+}
+#view3 object {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  pointer-events: none;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 0;
+  z-index: -1;
+}
+#view3 button {
+  width: 100px;
+  height: 50px;
+}
+#menuL {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
+  background-color: black;
+  width: 150px;
+  height: 100%;
+  z-order: 3;
+}
+#menu0, #menu1, #menu2, #menu3 {
+  position: fixed;
+  top: 0px;
+  left: 150px;
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
+  background-color: black;
+  width: 1216px;
+  height: 100%;
+}
+#menu0 table, #menu1 table, #menu2 table, #menu3 table {
+  border-collapse: collapse;
+  empty-cells: show;
+  table-layout: fixed;
+  width: 100%;
+  height: 100%;
+}
+#menuL {
+  visibility: visible;
+}
+#menu0, #menu1, #menu2, #menu3 {
+  visibility: hidden;
+}
+#menu1>tbody>tr>td table td, #menu2>tbody>tr>td table td {
+  background: none;
+}
+table#menuL td:hover, #menu0 td:hover, #menu1 td:hover, #menu2 td:hover, #menu3 td:hover {
+  background: gray;
+}
+
+/*メニューアイテム共通*/
+#menuL td, #menu0 td, #menu1 td, #menu2 td, #menu3 td {
+  margin: 0px;
+  padding: 0px;
+  border: solid 4px #FFFFFF;
+  border: solid var(--myborder) #FFFFFF;
+  background: black;
+  color: white;
+  font-family: "MS Gothic";
+  font-size: 16px;
+  font-size: var(--mymenusfontsize);
+  text-align: center;
+  vertical-align: center;
+  box-sizing: border-box;
+  user-select: none;
+}
+</style>
+<script>
+
+var menuL     = null;
+var menus     = [ null, null, null, null, ];
+var views     = [ null, null, null, null, ];
+var viewObjs  = [ [null, ], [null, null, null, null, ], [null, null, null, null, null, null, ], [null, ], ];
+var maxSize = 4;
+var maxElemSize = [ 1, 4, 6, 1, ];     /////////////////////////////////////////////////////
+var maxMenuSize = [ 64, 24, 16, 4, ];
+var ptzCmd = "";
+var ptzCurr = null;
+
+function getItv(tag) {
+  if (tag == "") {
+    return null;
+  }
+  for(var i = 0; i < itvlist.length; i++ ) {
+    if ( itvlist[i].tag == tag ) {
+      return itvlist[i];
+    }
+  }
+  return null;
+}
+function initializeGlobals() {
+  menuL = document.getElementById("menuL");
+  for (var size = 0; size < maxSize; size++) {
+    menus[size] = document.getElementById("menu" + size);
+    views[size] = document.getElementById("view" + size);
+    for (var i = 0; i < maxElemSize[size]; i++) {
+      viewObjs[size][i] = document.getElementById("obj"  + size + i);
+      viewObjs[size][i].Password("admin:jvc", 0);
+      viewObjs[size][i].SetDispTitle(1);
+    }
+  }
+}
+function initializeMenus() {
+  var elems;
+  var maxRows = [8, 2, 2, 2];
+  var maxCols = [12, 2, 3, 2];
+  for (var size = 0; size < maxSize; size++) {
+    elems = document.querySelectorAll("#menu" + size + (size == 0 || size == 3 ? "" : " table") );
+    for (var i = 0; i < elems.length; i++) {
+      var n = 0;
+      for (var r = 0; r < maxRows[size]; r++) {
+        for (var c = 0; c < maxCols[size]; c++) {
+          var itv = getItv( itvsets[size][i][n] );
+          elems[i].rows[r].cells[c].innerHTML = itv == null ? '&nbsp;<br>&nbsp;<br>&nbsp;' : itv.tag + '<br><br>' + itv.title;
+          n++;
+        }
+      }
+    }
+  }
+}
+function ShowView(size, itvset) {
+//  console.log( "ShowView:" + itvset );
+  for (var i = 0; i < maxSize; i++) {
+    views[i].style.visibility = i == size ? 'visible' : 'hidden';
+  }
+  for (var i = 0; i < maxElemSize[size]; i ++ ) {
+    var itv = getItv( itvset[i] );
+    if (itv === null )  continue;
+    viewObjs[size][i].IPaddr = itv.addr;
+    viewObjs[size][i].SelectCh = itv.input;
+    viewObjs[size][i].Play();
+  }
+  ptzCmd = "";
+  ptzCurr = null;
+}
+function HideView() {
+  for (var size = 0; size < maxSize; size++) {
+    views[size].style.visibility = 'hidden';
+    for (var i = 0; i < maxElemSize[size]; i ++ ) {
+      viewObjs[size][i].IPaddr = "";
+      viewObjs[size][i].Stop();
+    }
+  }
+}
+function HideMenu() {
+  for (var size = 0; size < maxSize; size++) {
+    menus[size].style.visibility = 'hidden';
+  }
+}
+function ShowMenuL() {
+  menuL.style.visibility = 'visible';
+}
+function ptzSendRequest(ptzCmd) {
+  var str = ptzCurr.url + "?pin=" + ptzCurr[ptzCmd] + "&time=" + Date.now(); //Casheさせないよう日時を付加
+  console.log(str);
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", str, true);
+  xhr.send(null);
+}
+function myonload() {
+  var elem;
+  var elems;
+  initializeGlobals();
+  initializeMenus();
+
+/************************************************
+PTZ
+************************************************/
+  var ptzEvent = function(ev) {
+    var tgt = ev.currentTarget;
+//    var ptz = getSelectedPtz(); ////////////////////////////////////// toDelete
+    if(!ptzCurr || !ptzCurr.tag) {
+      return;
+    }
+    if( ev.button == 0 && ptzCmd == "" && ev.type == "mousedown") {
+      var tmp = tgt.id;
+      if ( /ptz(left|right|up|down|tele|wide|far|near)/.test(tgt.id) ) {
+        ptzCmd = tgt.id.substr(3)
+        ptzSendRequest(ptzCmd);
+      }
+    } else if( ev.button != 0 || ev.type == "mouseout" || ev.type == "mouseup" ) {
+      ptzCmd = "";
+      return;
+    }
+    var s = setInterval(function() {
+      if( ptzCmd == "" ) {
+        clearInterval(s);
+        return;
+      }
+      ptzSendRequest(ptzCmd);
+    }, 50);
+  };
+  var ptzBtns =  ["ptzleft", "ptzright", "ptzup", "ptzdown", "ptztele", "ptzwide", "ptzfar", "ptznear"];
+  var ptzEvs =  ["mousedown", "mouseup", "mouseout"];
+  for( var i = 0; i < ptzBtns.length; i++ ) {
+    var elem = document.getElementById(ptzBtns[i]);
+    for( var k = 0; k < ptzEvs.length; k++ ) {
+      elem.addEventListener(ptzEvs[k], ptzEvent);
+    }
+  }
+/************************************************
+Menu
+************************************************/
+  var menuClick = function (e) {
+    var id = e.currentTarget.id;
+    if ( /menu0\d\d/.test(id) ) {        //menu0x
+      var j = Number(id.substr(5,2));
+      //console.log( itvsets[0][0][j] );
+      HideMenu();
+      ShowView(0, [itvsets[0][0][j]]); //要素数1の配列で渡す
+    } else if ( /menu3\d\d/.test(id) ) { //menu3x
+      var j = Number(id.substr(5,2));
+      //console.log( itvsets[3][0][j] );
+      HideMenu();
+      ShowView(3, [itvsets[3][0][j]]); //要素数1の配列で渡す
+      ptzCurr = ptzlist[j]
+    } else if ( /menu\d\d\d/.test(id) ) { //menu1x or menu2x
+      var i = Number(id.substr(4,1));
+      var j = Number(id.substr(5,2));
+      //console.log( itvsets[i][j] );
+      HideMenu();
+      ShowView(i, itvsets[i][j] );
+    }
+    e.preventDefault();
+    e.stopPropagation();
+  };
+  for (var size = 0; size < maxSize; size++) {
+    (function () {
+      var s = size;
+      elems = document.querySelectorAll('#menu' + s + '>tbody>tr>td');
+      for (var i = 0; i < elems.length; i++ ) {
+        elems[i].addEventListener("click", function(e) {
+          menuClick( e );
+          return false;
+        }, false);
+      }
+    })();
+  }
+/************************************************
+MenuL
+************************************************/
+  elem = document.getElementById("menuL");
+  elem.addEventListener("click", function(e) {
+    var id = e.target.id;
+    if ( /menuLsel\d/.test(id) ) {
+      HideView();
+      for (var size = 0; size < maxSize; size++) {
+        menus[size].style.visibility =  Number(id.substr("menuLsel".length,1)) == size ? 'visible' : 'hidden';
+      }
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }, false);
+}
+</script>
+</head>
+<body onload="myonload();">
+<table id="view0">
+  <tr>
+    <td id="view00" width="1208px" height="760px"><object id="obj00" width="1000px" height="750px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+  </tr>
+</table>
+<table id="view1">
+  <tr>
+    <td id="view10" width="602px" height="378px"><object id="obj10" width="500px" height="375px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+    <td id="view11" width="602px" height="378px"><object id="obj11" width="500px" height="375px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+  </tr>
+  <tr>
+    <td id="view12" width="602px" height="378px"><object id="obj12" width="500px" height="375px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+    <td id="view13" width="602px" height="378px"><object id="obj13" width="500px" height="375px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+  </tr>
+</table>
+<table id="view2">
+  <tr>
+    <td id="view20" width="400px" height="378px"><object id="obj20" width="400px" height="300px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+    <td id="view21" width="400px" height="378px"><object id="obj21" width="400px" height="300px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+    <td id="view22" width="400px" height="378px"><object id="obj22" width="400px" height="300px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+  </tr>
+  <tr>
+    <td id="view23" width="400px" height="378px"><object id="obj23" width="400px" height="300px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+    <td id="view24" width="400px" height="378px"><object id="obj24" width="400px" height="300px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+    <td id="view25" width="400px" height="378px"><object id="obj25" width="400px" height="300px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object></td>
+  </tr>
+</table>
+<table id="view3">
+  <tr>
+    <td id="view30" width="1208px" height="760px">
+<!---->
+      <object id="obj30" width="80px" height="60px" classid="CLSID:4ED834B1-862A-48BD-A9EA-8E799F419D2B"></object>
+<!---->
+      <form id="ptzcmd">
+        <button type="button" id="ptzleft">←左</button>
+        <button type="button" id="ptzright">右→</button><br>
+        <button type="button" id="ptzup">↑上</button>
+        <button type="button" id="ptzdown">↓下</button><br>
+        <button type="button" id="ptztele">望遠</button>
+        <button type="button" id="ptzwide">広角</button><br>
+        <button type="button" id="ptzfar">遠</button>
+        <button type="button" id="ptznear">近</button><br>
+      </form>
+    </td>
+  </tr>
+</table>
+<table id="menuL" class="menu">
+  <tr><td id="menuLsel0">1画面<br>選択へ</td></tr>
+  <tr><td id="menuLsel1">4画面<br>選択へ</td></tr>
+  <tr><td id="menuLsel2">6画面<br>選択へ</td></tr>
+  <tr><td id="menuLsel3">PTZ画面<br>選択へ</td></tr>
+</table>
+<table id="menu0" class="menu">
+  <tr>
+    <td id="menu000"></td><td id="menu001"></td><td id="menu002"></td><td id="menu003"></td>
+    <td id="menu004"></td><td id="menu005"></td><td id="menu006"></td><td id="menu007"></td>
+    <td id="menu008"></td><td id="menu009"></td><td id="menu010"></td><td id="menu011"></td>
+  </tr>
+  <tr>
+    <td id="menu012"></td><td id="menu013"></td><td id="menu014"></td><td id="menu015"></td>
+    <td id="menu016"></td><td id="menu017"></td><td id="menu018"></td><td id="menu019"></td>
+    <td id="menu020"></td><td id="menu021"></td><td id="menu022"></td><td id="menu023"></td>
+  </tr>
+  <tr>
+    <td id="menu024"></td><td id="menu025"></td><td id="menu026"></td><td id="menu027"></td>
+    <td id="menu028"></td><td id="menu029"></td><td id="menu030"></td><td id="menu031"></td>
+    <td id="menu032"></td><td id="menu033"></td><td id="menu034"></td><td id="menu035"></td>
+  </tr>
+  <tr>
+    <td id="menu036"></td><td id="menu037"></td><td id="menu038"></td><td id="menu039"></td>
+    <td id="menu040"></td><td id="menu041"></td><td id="menu042"></td><td id="menu043"></td>
+    <td id="menu044"></td><td id="menu045"></td><td id="menu046"></td><td id="menu047"></td>
+  </tr>
+  <tr>
+    <td id="menu048"></td><td id="menu049"></td><td id="menu050"></td><td id="menu051"></td>
+    <td id="menu052"></td><td id="menu053"></td><td id="menu054"></td><td id="menu055"></td>
+    <td id="menu056"></td><td id="menu057"></td><td id="menu058"></td><td id="menu059"></td>
+  </tr>
+  <tr>
+    <td id="menu060"></td><td id="menu061"></td><td id="menu062"></td><td id="menu063"></td>
+    <td id="menu064"></td><td id="menu065"></td><td id="menu066"></td><td id="menu067"></td>
+    <td id="menu068"></td><td id="menu069"></td><td id="menu070"></td><td id="menu071"></td>
+  </tr>
+  <tr>
+    <td id="menu072"></td><td id="menu073"></td><td id="menu074"></td><td id="menu075"></td>
+    <td id="menu076"></td><td id="menu077"></td><td id="menu078"></td><td id="menu079"></td>
+    <td id="menu080"></td><td id="menu081"></td><td id="menu082"></td><td id="menu083"></td>
+  </tr>
+  <tr>
+    <td id="menu084"></td><td id="menu085"></td><td id="menu086"></td><td id="menu087"></td>
+    <td id="menu088"></td><td id="menu089"></td><td id="menu090"></td><td id="menu091"></td>
+    <td id="menu092"></td><td id="menu093"></td><td id="menu094"></td><td id="menu095"></td>
+  </tr>
+</table>
+<table id="menu1" class="menu">
+  <tr>
+    <td id="menu100"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu101"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu102"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu103"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu104"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu105"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td id="menu106"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu107"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu108"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu109"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu110"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu111"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td id="menu112"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu113"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu114"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu115"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu116"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu117"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td id="menu118"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu119"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu120"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu121"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu122"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+    <td id="menu123"><table><tr><td></td><td></td></tr><tr><td></td><td></td></tr></table></td>
+  </tr>
+</table>
+<table id="menu2" class="menu">
+  <tr>
+    <td id="menu200"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu201"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu202"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu203"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td id="menu204"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu205"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu206"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu207"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td id="menu208"><table ><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu209"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu210"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu211"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+  </tr>
+  <tr>
+    <td id="menu212"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu213"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu214"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+    <td id="menu215"><table><tr><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td></tr></table></td>
+  </tr>
+</table>
+<table id="menu3" class="menu">
+  <tr>
+    <td id="menu300"></td><td id="menu301"></td>
+  </tr>
+  <tr>
+    <td id="menu302"></td><td id="menu303"></td>
+  </tr>
+</table>
+<script>
+
+var myDefault = {
+  password: "admin:jvc",
+  httpPort: 80,     // 1~65535
+  streamType: 1,    // 1:Unicast, 2:Multicast
+  framesize: 0,     // 0:VGAor640x360, 1:QVGAor32x180
+  bufferSize: 300,  // 300~1000[ms]
+  dispTitle: 1,     // 0:Hidden, 1:Show
+  textColorR: 255,  // 0~255
+  textColorG: 255,  // 0~255
+  textColorB: 255,  // 0~255
+
+  view: "view10",   // 4画面NO.1
+
+};
+
+var myConfig = {
+  displaySize : { width: 1366, height: 768 },
+  size : [ { rows: 1, cols: 1, }, { rows: 2, cols: 2, }, { rows: 2, cols: 3, }, { rows: 1, cols: 1, }, ],
+};
+
+var itvlist = [
+  { addr: "192.168.11.1",  input: 1, tag: "ITV5440",  title: "DR5440" },
+  { addr: "192.168.11.1",  input: 2, tag: "ITV5430",  title: "DR5430" },
+  { addr: "192.168.11.1",  input: 3, tag: "ITV5441",  title: "E5441"  },
+  { addr: "192.168.11.1",  input: 4, tag: "ITV5431",  title: "E5431"  },
+
+  { addr: "192.168.11.2",  input: 1, tag: "ITV5420",  title: "DR5420" },
+  { addr: "192.168.11.2",  input: 2, tag: "ITV5410",  title: "DR5410" },
+  { addr: "192.168.11.2",  input: 3, tag: "ITV5421",  title: "E5421"  },
+  { addr: "192.168.11.2",  input: 4, tag: "ITV5411",  title: "E5411"  },
+
+  { addr: "192.168.11.3",  input: 1, tag: "ITV5556",  title: "原体北" },
+  { addr: "192.168.11.3",  input: 2, tag: "ITV5350",  title: "D5350"  },
+  { addr: "192.168.11.3",  input: 3, tag: "ITV5556A", title: "原体南" },
+  { addr: "192.168.11.3",  input: 4, tag: "ITV5570",  title: "原末"   },
+
+  { addr: "192.168.11.4",  input: 1, tag: "ITV5420A", title: "DR5420" },
+  { addr: "192.168.11.4",  input: 2, tag: "ITV5410A", title: "DR5410" },
+  { addr: "192.168.11.4",  input: 3, tag: "ITV5440A", title: "DR5440" },
+  { addr: "192.168.11.4",  input: 4, tag: "ITV5430A", title: "DR5430" },
+
+  { addr: "192.168.11.5",  input: 1, tag: "ITV5330",  title: "D5330"  },
+  { addr: "192.168.11.5",  input: 2, tag: "ITV5220",  title: "S5220"  },
+  { addr: "192.168.11.5",  input: 3, tag: "ITV5340",  title: "D5340"  },
+  { addr: "192.168.11.5",  input: 4, tag: "ITV5320",  title: "D5320"  },
+
+  { addr: "192.168.11.6",  input: 1, tag: "ITV5200",  title: "D5200"  },
+  { addr: "192.168.11.6",  input: 2, tag: "ITV5110",  title: "R5110"  },
+  { addr: "192.168.11.6",  input: 3, tag: "ITV5210",  title: "D5210"  },
+  { addr: "192.168.11.6",  input: 4, tag: "ITV5120",  title: "D5120"  },
+
+  { addr: "192.168.11.7",  input: 1, tag: "ITV1630",  title: "S1630"  },
+  { addr: "192.168.11.7",  input: 2, tag: "ITV1672",  title: "S1672"  },
+  { addr: "192.168.11.7",  input: 3, tag: "ITV1105",  title: "D1105"  },
+  { addr: "192.168.11.7",  input: 4, tag: "ITV1510",  title: "S1510"  },
+
+  { addr: "192.168.11.8",  input: 1, tag: "ITV1745",  title: "放冷室" },
+  { addr: "192.168.11.8",  input: 2, tag: "ITV1744",  title: "充填室" },
+  { addr: "192.168.11.8",  input: 3, tag: "ITV1200",  title: "R1200"  },
+  { addr: "192.168.11.8",  input: 4, tag: "空き",     title: "空き"   },
+
+  { addr: "192.168.11.9",  input: 1, tag: "ITV2110",  title: "D2110横"},
+  { addr: "192.168.11.9",  input: 2, tag: "ITV2220",  title: "D2220横"},
+  { addr: "192.168.11.9",  input: 3, tag: "ITV2110A", title: "D2110底"},
+  { addr: "192.168.11.9",  input: 4, tag: "ITV2220A", title: "D5220底"},
+
+  { addr: "192.168.11.10", input: 1, tag: "ITV2210",  title: "D2320出"},
+  { addr: "192.168.11.10", input: 2, tag: "ITV2320A", title: "D2320入"},
+  { addr: "192.168.11.10", input: 3, tag: "ITV2312",  title: "D2320入"},
+  { addr: "192.168.11.10", input: 4, tag: "空き",     title: "空き"   },
+
+  { addr: "192.168.11.11", input: 1, tag: "ITV3215",  title: "P3215入"},
+  { addr: "192.168.11.11", input: 2, tag: "ITV3360",  title: "TK3360内"},
+  { addr: "192.168.11.11", input: 3, tag: "ITV3803",  title: "E3803出"},
+  { addr: "192.168.11.11", input: 4, tag: "ITV3420",  title: "D3420循環"},
+
+  { addr: "192.168.11.12", input: 1, tag: "ITV3600",  title: "S3600全景"},
+  { addr: "192.168.11.12", input: 2, tag: "ITV3600A", title: "S3600盤"  },
+  { addr: "192.168.11.12", input: 3, tag: "ITV3620",  title: "TK3620内" },
+  { addr: "192.168.11.12", input: 4, tag: "ITV3600G", title: "S3600排水"},
+
+  { addr: "192.168.11.13", input: 1, tag: "ITV3820",  title: "D3820内"  },
+  { addr: "192.168.11.13", input: 2, tag: "ITV3802",  title: "E3802排水"},
+  { addr: "192.168.11.13", input: 3, tag: "ITV3821",  title: "E3821出"  },
+  { addr: "192.168.11.13", input: 4, tag: "ITV2320",  title: "D2225入"  },
+
+  { addr: "192.168.11.14", input: 1, tag: "ITV3205", title: "D-3205" },
+  { addr: "192.168.11.14", input: 2, tag: "itv54", title: "#054" },
+  { addr: "192.168.11.14", input: 3, tag: "itv55", title: "#055" },
+  { addr: "192.168.11.14", input: 4, tag: "itv56", title: "#056" },
+
+  { addr: "192.168.11.15", input: 1, tag: "itv57", title: "#057" },
+  { addr: "192.168.11.15", input: 2, tag: "itv58", title: "#058" },
+  { addr: "192.168.11.15", input: 3, tag: "itv59", title: "#059" },
+  { addr: "192.168.11.15", input: 4, tag: "itv60", title: "#060" },
+
+  { addr: "192.168.11.16", input: 1, tag: "itv61", title: "#061" },
+  { addr: "192.168.11.16", input: 2, tag: "itv62", title: "#062" },
+  { addr: "192.168.11.16", input: 3, tag: "itv63", title: "#063" },
+  { addr: "192.168.11.16", input: 4, tag: "itv64", title: "#064" },
+];
+
+var itvsets = [
+  [
+    [
+    "ITV5440",  "ITV5430",  "ITV5441",  "ITV5431",
+    "ITV5420",  "ITV5410",  "ITV5421",  "ITV5411",
+    "ITV5556",  "ITV5350",  "ITV5556A", "ITV5570",
+    "ITV5420A", "ITV5410A", "ITV5440A", "ITV5430A",
+
+    "ITV5330",  "ITV5220",  "ITV5340",  "ITV5320",
+    "ITV5200",  "ITV5110",  "ITV5210",  "ITV5120",
+    "ITV1630",  "ITV1672",  "ITV1105",  "ITV1510",
+    "ITV1745",  "ITV1744",  "ITV1200",  "",
+
+    "ITV2110",  "ITV2220",  "ITV2110A", "ITV2220A",
+    "ITV2210",  "ITV2320A", "ITV2312",  "",
+    "ITV3215",  "ITV3360",  "ITV3803",  "ITV3420",
+    "ITV3600",  "ITV3600A", "ITV3620",  "ITV3600G",
+
+    "ITV3820",  "ITV3802",  "ITV3821",  "ITV2320",
+    "ITV3205",  "",         "",         "",
+    "",         "",         "",         "",
+    "",         "",         "",         "",
+
+    "",         "",         "",         "",
+    "",         "",         "",         "",
+    "",         "",         "",         "",
+    "",         "",         "",         "",
+
+    "",         "",         "",         "",
+    "",         "",         "",         "",
+    "",         "",         "",         "",
+    "",         "",         "",         "",
+    ],
+  ],
+
+  [
+    ["ITV5440",  "ITV5430",  "ITV5441",  "ITV5431" ],
+    ["ITV5420",  "ITV5410",  "ITV5421",  "ITV5411" ],
+    ["ITV5556",  "ITV5350",  "ITV5556A", "ITV5570" ],
+    ["ITV5420A", "ITV5410A", "ITV5440A", "ITV5430A"],
+    ["ITV5330",  "ITV5220",  "ITV5340",  "ITV5320" ],
+    ["ITV5200",  "ITV5110",  "ITV5210",  "ITV5120" ],
+
+    ["ITV1630",  "ITV1672",  "ITV1105",  "ITV1510" ],
+    ["ITV1745",  "ITV1744",  "ITV1200",  ""],
+    ["ITV2110",  "ITV2220",  "ITV2110A", "ITV2220A"],
+    ["ITV2210",  "ITV2320A", "ITV2312",  ""],
+    ["ITV3215",  "ITV3360",  "ITV3803",  "ITV3420" ],
+    ["ITV3600",  "ITV3600A", "ITV3620",  "ITV3600G"],
+
+    ["ITV3820",  "ITV3802",  "ITV3821",  "ITV2320" ],
+    ["ITV3205",  "",         "",         ""        ],
+    ["",         "",         "",         ""        ],
+    ["",         "",         "",         ""        ],
+    ["",         "",         "",         ""        ],
+    ["",         "",         "",         ""        ],
+
+    ["",         "",         "",         ""        ],
+    ["",         "",         "",         ""        ],
+    ["",         "",         "",         ""        ],
+    ["",         "",         "",         ""        ],
+    ["",         "",         "",         ""        ],
+    ["",         "",         "",         ""        ],
+  ],
+
+  [
+    ["ITV5440",  "ITV5430",  "ITV5441",  "ITV5431",  "ITV5420",  "ITV5410" ],
+    ["ITV5421",  "ITV5411",  "ITV5556",  "ITV5350",  "ITV5556A", "ITV5570" ],
+    ["ITV5420A", "ITV5410A", "ITV5440A", "ITV5430A", "ITV5330",  "ITV5220" ],
+    ["ITV5340",  "ITV5320",  "ITV5200",  "ITV5110",  "ITV5210",  "ITV5120" ],
+
+    ["ITV1630",  "ITV1672",  "ITV1105",  "ITV1510",  "ITV1745",  "ITV1744" ],
+    ["ITV1200",  "",         "ITV2110",  "ITV2220",  "ITV2110A", "ITV2220A"],
+    ["ITV2210",  "ITV2320A", "ITV2312",  "",         "ITV3215",  "ITV3360" ],
+    ["ITV3803",  "ITV3420",  "ITV3600",  "ITV3600A", "ITV3620",  "ITV3600G"],
+
+    ["ITV3820",  "ITV3802",  "ITV3821",  "ITV2320",  "ITV3205",  ""        ],
+    ["",         "",         "",         "",         "",         ""        ],
+    ["",         "",         "",         "",         "",         ""        ],
+    ["",         "",         "",         "",         "",         ""        ],
+
+    ["",         "",         "",         "",         "",         ""        ],
+    ["",         "",         "",         "",         "",         ""        ],
+    ["",         "",         "",         "",         "",         ""        ],
+    ["",         "",         "",         "",         "",         ""        ],
+  ],
+
+  [
+    [
+    "ITV3205",  "",         "",         "",
+    ],
+  ],
+];
+
+var ptzlist =
+[
+  {
+    tag : "ITV3205", "url" : "http://127.0.0.1:8080/",
+    left : 4,  right: 17, up : 27, down : 22, tele : 18, wide : 23, far : 24, near : 25
+  },
+  {
+    tag : "", url : "",
+    left : 4,  right: 17, up : 27, down : 22, tele : 18, wide : 23, far : 24, near : 25
+  },
+  {
+    tag : "", url : "",
+    left : 4,  right: 17, up : 27, down : 22, tele : 18, wide : 23, far : 24, near : 25
+  },
+  {
+    tag : "", url : "",
+    left : 4,  right: 17, up : 27, down : 22, tele : 18, wide : 23, far : 24, near : 25
+  }
+];
+
+function test1(size) {
+  for (var i = 0; i < maxElemSize[size]; i++ ) {
+    console.log("IPaddr:" + viewObjs[size][i].IPaddr + " SelectCh:" + viewObjs[size][i].SelectCh);
+  }
+}
+</script>
+</body>
+</html>

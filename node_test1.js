@@ -1,17 +1,20 @@
-var fs = require('fs');
+var fs   = require('fs');
 var path = require('path');
-var url = require('url');
+var url  = require('url');
 var http = require('http');
 
 var dir = '/sys/class/gpio/';
-var pins = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27];
+var pins = ["2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27"];
+var pinPrev = "";
+var timer = null;
+
 //終了処理
 process.on('exit', function( code ) {
 /*
   for(let pin of pins) {
     console.log("exit:" + pin);
-    fs.writeFileSync path.join(dir, 'gpio' +  pin, 'value'), 0;
-    fs.writeFileSync path.join(dir, 'unexport'), pin;
+    fs.writeFileSync(path.join(dir, 'gpio' +  pin, 'value'), 0);
+    fs.writeFileSync(path.join(dir, 'unexport'), parseInt(pin));
   }
 */
 });
@@ -20,49 +23,38 @@ process.on('exit', function( code ) {
 (function() {
 /*
   for(let pin of pins) {
-    console.log("init:" + pin);
-    fs.writeFileSync path.join(dir, 'export'), pin;
-    fs.writeFileSync path.join(dir, 'gpio' +  pin, 'direction'), 'out';
-    fs.writeFileSync path.join(dir, 'gpio' +  pin, 'value'), 0;
-    fs.writeFileSync path.join(dir, 'gpio' +  pin, 'direction'), 'out';
+    fs.writeFileSync(path.join(dir, 'export'), parseInt(pin));
+    fs.writeFileSync(path.join(dir, 'gpio' +  pin, 'direction'), 'out');
+    fs.writeFileSync(path.join(dir, 'gpio' +  pin, 'value'), 0);
   }
 */
 }());
 
-var ptzs = {};
-
 var server = http.createServer(function(req, res) {
 
   var url_parse = url.parse(req.url, true);
-  var path = url_parse.pathname;
-  var tag = url_parse.query.tag;
-  var act = url_parse.query.act;
-  var port = url_parse.query.port;
+  var pinCurr = url_parse.query.pin;
   res.end();
 
-  if(path == '/config') {
-    if(tag) { ptzs[tag] = ptzs[tag] || new Object; }
-    if(act) { ptzs[tag][act] = parseInt(port); }
-    return;
-  } else if( path == '/action' ) {
-  
+  console.log("pin: " + pinCurr);
+  if(!pinCurr || pins.indexOf(pinCurr) < 0) {
+    console.log("pin: UNKNOWN");
     return;
   }
-
-  console.log( "tag: " + tag + ", act: " + act + ", port: " + port );
-  return;
-
-  if(ptzs[tag]) { //どれもONでないならば
-    console.log( "tag: " + tag + ", act: " + act + ", port: " + port + "<<ON>>");
-    ptzs[tag] = {}; //ONを設定する
+  if(pins.indexOf(pinPrev) < 0) {
+//    fs.writeFileSync(path.join(dir, 'gpio' +  pinCurr, 'value'), 1);
+    console.log( "pin: " + pinCurr + "<<ON>>");
+    pinPrev = pinCurr;
   }
-  if(ptzs[tag]) { //既にONにしているなら
-    var s = setInterval(function() { //同じクエリが来なくなった
-      clearInterval(s);
-      //対象GPIOをOFF
+  if(pinPrev != "" && pinPrev == pinCurr) {
+    console.log("pin: " + pinPrev + "<<CONT>>");
+    clearTimeout( timer );
+    timer = setTimeout(function() {
+//      fs.writeFileSync(path.join(dir, 'gpio' +  pinPrev, 'value'), 0);
+      console.log("pin: " + pinPrev + "<<OFF>>");
+      pinPrev = "";
       return;
-    }, 300);
+    }, 100);
   }
-}).listen(8080)
-;
+}).listen(8080);
 console.log('Server running at http://localhost:8080/');
