@@ -1,0 +1,52 @@
+■IPアドレスの変更
+/etc/network/interfaces
+↓変更内容------------------------------
+iface eth0 inet static ←dhcpの部分をstaticに変える
+address 192.168.10.**/24  ←31から順に
+netmask 255.255.255.0
+gateway 192.168.10.**
+<<または>>
+/etc/dhcpcd.conf
+↓変更内容------------------------------
+interface eth0
+static ip_address=192.168.10.**/24  ←31から順に
+static routers=192.168.10.**
+static domain_name_servers=192.168.10.**
+----------------------------------------
+ifconfig ←でコマンドで確認できるよ
+sudo ifdown ifname ←Interface(ifname)の停止
+sudo ifup   ifname ←Interface(ifname)の起動
+----------------------------------------
+有線はeth0,無線はwlan0
+
+■SSHサーバの自動起動
+sudo /etc/init.d/ssh start
+sudo update-rc.d ssh defaults
+
+■Nodeインストール
+
+
+■Nodeの自動起動(Service化)
+/etc/systemd/system/itvptz.service
+----------------------------------------
+[Unit]
+Description=itvptz
+[Service]
+ExecStart=Simple
+Type=sudo /path/to/nodejs/node /path/to/js/itvptz.js
+[Install]
+WantedBy=multi-user.target
+----------------------------------------
+sudo systemctl deamon-reload       ←サービス再読み込み
+sudo systemctl status servicename  ←サービス動作状況確認
+sudo systemctl start servicename   ←サービス開始
+sudo systemctl stop servicename    ←サービス停止
+sudo systemctl enable servicename  ←サービス自動起動有効化
+sudo systemctl disable servicename ←サービス自動起動無効化
+----------------------------------------
+以下を実行
+sudo mv /path/to/original/itvptz.service /etc/systemd/system/
+sudo chown root:root /etc/systemd/system/itvptz.service
+sudo chmod 644 /etc/systemd/system/itvptz.service
+
+
